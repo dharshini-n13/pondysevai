@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import Navbar from '@/components/layout/Navbar'
 import { ChevronRight, Lock } from 'lucide-react'
 import { COMMUNES } from '@/lib/utils'
+import { api, ApiError } from '@/lib/api'
 
 const STEPS = ['step1', 'step2', 'step3', 'step4'] as const
 
@@ -26,59 +27,59 @@ export default function RegisterPage() {
   const locale = useLocale()
   const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
-  const [refNum] = useState(() => 'PSA-' + Math.random().toString(36).substring(2, 8).toUpperCase())
+  const [refNum, setRefNum] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState<FormData>(EMPTY)
 
-  // All option arrays built from translations
   const GENDER_OPTS = [
     { val: 'prefer', label: t('gender_prefer') },
     { val: 'female', label: t('gender_female') },
-    { val: 'male',   label: t('gender_male') },
-    { val: 'other',  label: t('gender_other') },
+    { val: 'male', label: t('gender_male') },
+    { val: 'other', label: t('gender_other') },
   ]
   const LANG_OPTS = [
-    { val: 'tamil',     label: t('lang_tamil') },
-    { val: 'english',   label: t('lang_english') },
-    { val: 'french',    label: t('lang_french') },
-    { val: 'telugu',    label: t('lang_telugu') },
+    { val: 'tamil', label: t('lang_tamil') },
+    { val: 'english', label: t('lang_english') },
+    { val: 'french', label: t('lang_french') },
+    { val: 'telugu', label: t('lang_telugu') },
     { val: 'malayalam', label: t('lang_malayalam') },
   ]
   const QUAL_OPTS = [
-    { val: 'qual_10th',      label: t('qual_10th') },
-    { val: 'qual_12th',      label: t('qual_12th') },
-    { val: 'qual_diploma',   label: t('qual_diploma') },
+    { val: 'qual_10th', label: t('qual_10th') },
+    { val: 'qual_12th', label: t('qual_12th') },
+    { val: 'qual_diploma', label: t('qual_diploma') },
     { val: 'qual_bachelors', label: t('qual_bachelors') },
-    { val: 'qual_masters',   label: t('qual_masters') },
-    { val: 'qual_nss',       label: t('qual_nss') },
-    { val: 'qual_firstaid',  label: t('qual_firstaid') },
-    { val: 'qual_driving',   label: t('qual_driving') },
+    { val: 'qual_masters', label: t('qual_masters') },
+    { val: 'qual_nss', label: t('qual_nss') },
+    { val: 'qual_firstaid', label: t('qual_firstaid') },
+    { val: 'qual_driving', label: t('qual_driving') },
   ]
   const AVAIL_OPTS = [
     { val: 'avail_weekday_morning', label: t('avail_weekday_morning') },
     { val: 'avail_weekday_evening', label: t('avail_weekday_evening') },
-    { val: 'avail_weekends',        label: t('avail_weekends') },
-    { val: 'avail_holidays',        label: t('avail_holidays') },
-    { val: 'avail_flexible',        label: t('avail_flexible') },
+    { val: 'avail_weekends', label: t('avail_weekends') },
+    { val: 'avail_holidays', label: t('avail_holidays') },
+    { val: 'avail_flexible', label: t('avail_flexible') },
   ]
   const DEPT_OPTS = [
-    { val: 'dept_health',    label: t('dept_health') },
+    { val: 'dept_health', label: t('dept_health') },
     { val: 'dept_education', label: t('dept_education') },
-    { val: 'dept_welfare',   label: t('dept_welfare') },
-    { val: 'dept_env',       label: t('dept_env') },
-    { val: 'dept_digital',   label: t('dept_digital') },
-    { val: 'dept_culture',   label: t('dept_culture') },
-    { val: 'dept_law',       label: t('dept_law') },
-    { val: 'dept_disaster',  label: t('dept_disaster') },
+    { val: 'dept_welfare', label: t('dept_welfare') },
+    { val: 'dept_env', label: t('dept_env') },
+    { val: 'dept_digital', label: t('dept_digital') },
+    { val: 'dept_culture', label: t('dept_culture') },
+    { val: 'dept_law', label: t('dept_law') },
+    { val: 'dept_disaster', label: t('dept_disaster') },
     { val: 'dept_municipal', label: t('dept_municipal') },
-    { val: 'dept_women',     label: t('dept_women') },
+    { val: 'dept_women', label: t('dept_women') },
   ]
   const ROLE_TYPE_OPTS = [
-    { val: 'role_field',    label: t('role_field') },
-    { val: 'role_office',   label: t('role_office') },
+    { val: 'role_field', label: t('role_field') },
+    { val: 'role_office', label: t('role_office') },
     { val: 'role_outreach', label: t('role_outreach') },
-    { val: 'role_tech',     label: t('role_tech') },
-    { val: 'role_any',      label: t('role_any') },
+    { val: 'role_tech', label: t('role_tech') },
+    { val: 'role_any', label: t('role_any') },
   ]
 
   const set = (field: keyof FormData, value: unknown) =>
@@ -99,7 +100,53 @@ export default function RegisterPage() {
     setError(''); return true
   }
 
-  const nextStep = () => { if (validate()) { if (step === 3) setSubmitted(true); else setStep(s => s + 1) } }
+  const handleSubmit = async () => {
+    if (!validate()) return
+    setLoading(true)
+    setError('')
+    try {
+      const result = await api.volunteers.register({
+        full_name: form.fullName,
+        dob: form.dob,
+        phone: form.phone,
+        email: form.email || undefined,
+        commune: form.commune,
+        address: form.address || undefined,
+        gender: form.gender || undefined,
+        languages: form.languages,
+        qualifications: form.qualifications,
+        availability: form.availability,
+        mobility_impairment: form.mobilityImpairment,
+        experience: form.experience || undefined,
+        departments: form.departments,
+        motivation: form.motivation || undefined,
+        role_type: form.roleType || undefined,
+      })
+      setRefNum(result.reference_number)
+      setSubmitted(true)
+    } catch (err) {
+      if (err instanceof ApiError) {
+        if (err.status === 409) {
+          setError('A volunteer with this phone number already exists.')
+        } else {
+          setError(err.message)
+        }
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const nextStep = () => {
+    if (!validate()) return
+    if (step === 3) {
+      handleSubmit()
+    } else {
+      setStep(s => s + 1)
+    }
+  }
 
   const inp = 'w-full rounded-xl text-sm outline-none px-4 py-3'
   const inpStyle = { border: '1px solid #E2E2DC', color: '#1A2B4A' }
@@ -153,7 +200,6 @@ export default function RegisterPage() {
             <p className="text-sm mt-1" style={{ color: '#888' }}>{t('sub')}</p>
           </div>
 
-          {/* Progress bar */}
           <div className="flex gap-2 mb-8">
             {STEPS.map((s, i) => (
               <div key={s} className="flex-1">
@@ -166,13 +212,11 @@ export default function RegisterPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Form */}
             <div className="lg:col-span-2 bg-white rounded-2xl p-6 lg:p-8 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
               {error && (
                 <div className="mb-5 px-4 py-3 rounded-xl text-sm" style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626' }}>{error}</div>
               )}
 
-              {/* Step 1 — Personal Info */}
               {step === 0 && (
                 <div className="space-y-5">
                   <h2 className="font-semibold text-xl" style={{ fontFamily: 'var(--font-sora),sans-serif', color: '#1A2B4A' }}>{t('step1')}</h2>
@@ -221,7 +265,6 @@ export default function RegisterPage() {
                 </div>
               )}
 
-              {/* Step 2 — Skills */}
               {step === 1 && (
                 <div className="space-y-6">
                   <h2 className="font-semibold text-xl" style={{ fontFamily: 'var(--font-sora),sans-serif', color: '#1A2B4A' }}>{t('step2')}</h2>
@@ -257,7 +300,6 @@ export default function RegisterPage() {
                 </div>
               )}
 
-              {/* Step 3 — Role Preferences */}
               {step === 2 && (
                 <div className="space-y-6">
                   <h2 className="font-semibold text-xl" style={{ fontFamily: 'var(--font-sora),sans-serif', color: '#1A2B4A' }}>{t('step3')}</h2>
@@ -290,7 +332,6 @@ export default function RegisterPage() {
                 </div>
               )}
 
-              {/* Step 4 — Declaration */}
               {step === 3 && (
                 <div className="space-y-5">
                   <h2 className="font-semibold text-xl" style={{ fontFamily: 'var(--font-sora),sans-serif', color: '#1A2B4A' }}>{t('step4')}</h2>
@@ -305,20 +346,18 @@ export default function RegisterPage() {
                 </div>
               )}
 
-              {/* Nav buttons */}
               <div className="flex justify-between mt-8 pt-6" style={{ borderTop: '1px solid #F0F0EE' }}>
                 {step > 0
                   ? <button onClick={() => setStep(s => s - 1)} className="text-sm font-medium" style={{ color: '#888' }}>← {t('back')}</button>
                   : <div />}
-                <button onClick={nextStep}
+                <button onClick={nextStep} disabled={loading}
                   className="inline-flex items-center gap-2 text-white font-medium rounded-xl px-6 py-3 text-sm"
-                  style={{ background: '#E65C00' }}>
-                  {step < 3 ? <>{[t('next1'), t('next2'), t('next3')][step]} <ChevronRight size={16} /></> : t('submit')}
+                  style={{ background: '#E65C00', opacity: loading ? 0.7 : 1 }}>
+                  {loading ? '...' : step < 3 ? <>{[t('next1'), t('next2'), t('next3')][step]} <ChevronRight size={16} /></> : t('submit')}
                 </button>
               </div>
             </div>
 
-            {/* Sidebar */}
             <div className="space-y-4">
               <div className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
                 <h3 className="font-semibold text-sm mb-3" style={{ color: '#1A2B4A' }}>{t('app_progress')}</h3>

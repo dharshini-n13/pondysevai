@@ -4,17 +4,14 @@ import { useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import { setSession } from '@/lib/store'
+import { api, ApiError } from '@/lib/api'
 
 export type LoginVariant = 'volunteer' | 'nodal-officer' | 'admin'
 
 const CONFIG = {
-  volunteer:      { icon: '🙋', accent: '#E65C00', accentLight: '#FFF1E8', useOtp: true,  dashboardHref: '/dashboard',     badge: 'Volunteer Portal' },
-  'nodal-officer':{ icon: '🏛️', accent: '#1A56DB', accentLight: '#EEF2FA', useOtp: false, dashboardHref: '/nodal-officer', badge: 'Government Portal' },
-  admin:          { icon: '⚙️', accent: '#1A2B4A', accentLight: '#F1F5F9', useOtp: false, dashboardHref: '/admin',         badge: 'Admin Portal' },
-}
-const MOCK_CREDS = {
-  'nodal-officer': { id: 'officer@puducherry.gov.in', password: 'officer123' },
-  admin:           { id: 'admin@pondysevai.in',       password: 'admin123'  },
+  volunteer:       { icon: '🙋', accent: '#E65C00', accentLight: '#FFF1E8', useOtp: true,  dashboardHref: '/dashboard',     badge: 'Volunteer Portal' },
+  'nodal-officer': { icon: '🏛️', accent: '#1A56DB', accentLight: '#EEF2FA', useOtp: false, dashboardHref: '/nodal-officer', badge: 'Government Portal' },
+  admin:           { icon: '⚙️', accent: '#1A2B4A', accentLight: '#F1F5F9', useOtp: false, dashboardHref: '/admin',         badge: 'Admin Portal' },
 }
 
 export default function LoginCard({ variant }: { variant: LoginVariant }) {
@@ -27,32 +24,61 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
   const [otp, setOtp] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [otpSent, setOtpSent] = useState(false)
+  const [devOtp, setDevOtp] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const variantTitleKey = variant === 'volunteer' ? 'vol_title' : variant === 'nodal-officer' ? 'nodal_title' : 'admin_title'
   const variantDescKey  = variant === 'volunteer' ? 'vol_desc'  : variant === 'nodal-officer' ? 'nodal_desc'  : 'admin_desc'
 
-  const handleSendOtp = () => {
+  const handleSendOtp = async () => {
     if (identifier.length !== 10) { setError(t('err_phone')); return }
     setLoading(true); setError('')
-    setTimeout(() => { setLoading(false); setOtpSent(true) }, 1200)
+    try {
+      const result = await api.auth.sendOtp(identifier)
+      setOtpSent(true)
+      // In dev mode, show the OTP on screen
+      if (result.dev_otp) setDevOtp(result.dev_otp)
+    } catch (err) {
+      if (err instanceof ApiError) setError(err.message)
+      else setError('Failed to send OTP. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setError('')
-    if (cfg.useOtp) {
-      if (identifier.length !== 10) { setError(t('err_phone')); return }
-      if (!otp || otp.length !== 6) { setError(t('err_otp')); return }
-      setLoading(true)
-      setTimeout(() => { setLoading(false); setSession('volunteer', `Volunteer (+91${identifier})`); window.location.href = `/${locale}${cfg.dashboardHref}` }, 1000)
-    } else {
-      if (!identifier.trim()) { setError(t('err_id')); return }
-      if (!password.trim()) { setError(t('err_password')); return }
-      const mock = MOCK_CREDS[variant as 'nodal-officer' | 'admin']
-      if (mock && (identifier !== mock.id || password !== mock.password)) { setError(t('err_invalid') + ' Demo: ' + mock.id + ' / ' + mock.password); return }
-      setLoading(true)
-      setTimeout(() => { setLoading(false); setSession(variant, identifier); window.location.href = `/${locale}${cfg.dashboardHref}` }, 1000)
+    setLoading(true)
+    try {
+      let result: { access_token: string; role: string; name: string }
+      if (cfg.useOtp) {
+        if (identifier.length !== 10) { setError(t('err_phone')); setLoading(false); return }
+        if (!otp || otp.length !== 6) { setError(t('err_otp')); setLoading(false); return }
+        result = await api.auth.verifyOtp(identifier, otp)
+      } else if (variant === 'nodal-officer') {
+        if (!identifier.trim()) { setError(t('err_id')); setLoading(false); return }
+        if (!password.trim()) { setError(t('err_password')); setLoading(false); return }
+        result = await api.auth.staffLogin(identifier, password)
+      } else {
+        if (!identifier.trim()) { setError(t('err_id')); setLoading(false); return }
+        if (!password.trim()) { setError(t('err_password')); setLoading(false); return }
+        result = await api.auth.adminLogin(identifier, password)
+      }
+      // Save token and session
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('psevai_token', result.access_token)
+      }
+      setSession(result.role as 'volunteer' | 'nodal-officer' | 'admin', result.name)
+      window.location.href = `/${locale}${cfg.dashboardHref}`
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.status === 401 ? t('err_invalid') : err.message)
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -84,12 +110,16 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
 
           <div className="bg-white rounded-2xl p-8 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
             {error && <div className="mb-5 px-4 py-3 rounded-xl text-sm" style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626' }}>{error}</div>}
+            {devOtp && (
+              <div className="mb-5 px-4 py-3 rounded-xl text-sm" style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#16A34A' }}>
+                Dev OTP: <strong>{devOtp}</strong> (only shown in development mode)
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Identifier */}
               <div>
                 <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>
-                  {cfg.useOtp ? t('otp_label').replace('OTP', '') || 'Phone' : (variant === 'nodal-officer' ? t('nodal_title') : t('admin_title')) + ' Email'}
+                  {cfg.useOtp ? t('otp_label').replace('OTP','Phone') || 'Phone' : 'Email'}
                 </label>
                 {cfg.useOtp ? (
                   <div className="relative">
@@ -103,13 +133,12 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
                   </div>
                 ) : (
                   <input type="email" value={identifier} onChange={e => setIdentifier(e.target.value)}
-                    placeholder={MOCK_CREDS[variant as 'nodal-officer' | 'admin']?.id}
+                    placeholder={variant === 'nodal-officer' ? 'officer@puducherry.gov.in' : 'admin@pondysevai.in'}
                     className="w-full rounded-xl text-sm outline-none"
                     style={{ border: '1px solid #E2E2DC', padding: '12px 16px', color: '#1A2B4A' }} />
                 )}
               </div>
 
-              {/* OTP send */}
               {cfg.useOtp && !otpSent && (
                 <button type="button" onClick={handleSendOtp} disabled={loading}
                   className="w-full py-3 rounded-xl text-sm font-medium text-white"
@@ -118,7 +147,6 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
                 </button>
               )}
 
-              {/* OTP input */}
               {cfg.useOtp && otpSent && (
                 <div>
                   <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>
@@ -129,12 +157,11 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
                     placeholder="• • • • • •"
                     className="w-full rounded-xl text-sm text-center font-mono outline-none"
                     style={{ border: '1px solid #E2E2DC', padding: '12px 16px', color: '#1A2B4A', letterSpacing: '0.5em' }} />
-                  <button type="button" onClick={() => { setOtpSent(false); setOtp('') }}
+                  <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setDevOtp('') }}
                     className="mt-2 text-xs" style={{ color: '#888' }}>{t('change_number')}</button>
                 </div>
               )}
 
-              {/* Password */}
               {!cfg.useOtp && (
                 <div>
                   <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>{t('password_label')}</label>
@@ -148,13 +175,9 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
-                  <p className="mt-1 text-xs" style={{ color: '#bbb' }}>
-                    {t('demo_label')} {MOCK_CREDS[variant as 'nodal-officer' | 'admin']?.id} / {MOCK_CREDS[variant as 'nodal-officer' | 'admin']?.password}
-                  </p>
                 </div>
               )}
 
-              {/* Submit */}
               {(!cfg.useOtp || otpSent) && (
                 <button type="submit" disabled={loading}
                   className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:-translate-y-0.5"
@@ -169,14 +192,8 @@ export default function LoginCard({ variant }: { variant: LoginVariant }) {
                 {t('new_volunteer_q')} <a href={`/${locale}/register`} style={{ color: '#E65C00', fontWeight: 500 }}>{t('register_link')}</a>
               </p>
             )}
-            {variant === 'nodal-officer' && (
-              <p className="mt-5 text-center text-xs" style={{ color: '#aaa' }}>
-                {t('not_nodal')} <a href={`/${locale}/login/volunteer`} style={{ color: '#1A56DB', fontWeight: 500 }}>{t('volunteer_login_link')}</a>
-              </p>
-            )}
           </div>
 
-          {/* Portal switcher */}
           <div className="mt-6 flex justify-center gap-4 text-xs">
             {PORTALS.map((p, i) => (
               <span key={p.variant} className="flex items-center gap-4">
