@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --orange: #E65C00;
+  --orange-light: #FF7B2E;
+  --orange-pale: #FFF1E8;
+  --navy: #1A2B4A;
+  --navy-mid: #2D4270;
+  --navy-light: #EEF2FA;
+  --brand-blue: #1A56DB;
+  --warm-white: #FAFAF9;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-dm-sans), sans-serif;
+  color: var(--navy);
+  background: var(--warm-white);
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .font-head {
+    font-family: var(--font-sora), sans-serif;
+  }
+  .font-body {
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+  .font-tamil {
+    font-family: var(--font-noto-tamil), sans-serif;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-grid {
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .animate-pulse-dot {
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.animate-fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+.animate-fade-up-2 { animation-delay: 0.2s; opacity: 0; }
+.animate-fade-up-3 { animation-delay: 0.3s; opacity: 0; }
+.animate-fade-up-4 { animation-delay: 0.4s; opacity: 0; }
+.animate-fade-up-5 { animation-delay: 0.5s; opacity: 0; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Large text mode */
+html.large-text {
+  font-size: 20px;
+}
+
+/* High contrast mode */
+html.high-contrast {
+  --orange: #CC4400;
+  --navy: #000000;
+  filter: contrast(1.2);
+}
+
+/* Touch targets */
+button, a, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}

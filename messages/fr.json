@@ -1,0 +1,618 @@
+{
+  "nav": {
+    "how": "Comment ça marche",
+    "departments": "Départements",
+    "rewards": "Récompenses",
+    "about": "À propos",
+    "cta": "Devenir bénévole",
+    "my_dashboard": "Mon tableau de bord",
+    "sign_in": "Se connecter",
+    "sign_out": "Se déconnecter",
+    "initiative_by": "Une initiative de"
+  },
+  "hero": {
+    "pill": "Gouvernement de Pondichéry — Plateforme civique de bénévolat",
+    "title": "Donnez de votre temps.\nFaites de Pondichéry\nun endroit meilleur.",
+    "subtitle": "PondySevai met en relation des citoyens engagés avec les départements gouvernementaux — vérifiés, formés et reconnus.",
+    "cta1": "S'inscrire comme bénévole",
+    "cta2": "Voir comment ça marche"
+  },
+  "stats": {
+    "communes": "Communes couvertes",
+    "departments": "Dép. gouvernementaux",
+    "volunteers": "Bénévoles inscrits",
+    "register": "Minutes pour s'inscrire",
+    "powered": "Propulsé par Claude AI"
+  },
+  "how": {
+    "tag": "Processus",
+    "title": "Quatre étapes vers l'impact civique",
+    "sub": "De l'inscription à votre première mission — votre profil est mis en correspondance par l'IA.",
+    "step1": {
+      "title": "Créez votre profil",
+      "desc": "Inscrivez-vous avec vos compétences, langues, disponibilités et commune."
+    },
+    "step2": {
+      "title": "Être associé à un rôle",
+      "desc": "Claude AI évalue votre profil et recommande les rôles les mieux adaptés."
+    },
+    "step3": {
+      "title": "Formation et déploiement",
+      "desc": "Suivez un court module de formation, puis pointez sur votre site par QR code."
+    },
+    "step4": {
+      "title": "Être reconnu",
+      "desc": "Recevez des certificats vérifiables par QR et progressez dans les niveaux."
+    }
+  },
+  "dept": {
+    "tag": "Départements",
+    "title": "Là où vos compétences sont nécessaires",
+    "viewall": "Voir tous les départements",
+    "health": {
+      "name": "Santé et médecine",
+      "desc": "Soutenir les campagnes de vaccination, les centres de santé et la sensibilisation communautaire.",
+      "roles": "6 postes ouverts"
+    },
+    "education": {
+      "name": "Éducation et alphabétisation",
+      "desc": "Enseigner les compétences numériques, aider dans les écoles publiques.",
+      "roles": "5 postes ouverts"
+    },
+    "welfare": {
+      "name": "Aide sociale",
+      "desc": "Aider les communautés vulnérables, distribuer des aides sociales.",
+      "roles": "4 postes ouverts"
+    },
+    "environment": {
+      "name": "Environnement et assainissement",
+      "desc": "Nettoyage des plages, plantation de mangroves, sensibilisation aux déchets.",
+      "roles": "5 postes ouverts"
+    },
+    "digital": {
+      "name": "Gouvernance numérique",
+      "desc": "Aider les citoyens à naviguer dans les services gouvernementaux en ligne.",
+      "roles": "3 postes ouverts"
+    },
+    "culture": {
+      "name": "Culture et événements",
+      "desc": "Organiser la Fête Nationale, Pongal et des événements du patrimoine.",
+      "roles": "6 postes ouverts"
+    }
+  },
+  "depts_page": {
+    "pill": "Tous les départements gouvernementaux et rôles",
+    "title_1": "Tous les",
+    "title_2": "Départements",
+    "title_3": "et Rôles Bénévoles",
+    "subtitle": "Consultez tous les rôles bénévoles ouverts dans les départements gouvernementaux. Les tags de demande physique sont utilisés pour le matching IA.",
+    "col_role": "Rôle",
+    "col_qualifications": "Qualifications clés",
+    "col_demand": "Demande",
+    "roles_suffix": "rôles",
+    "demand_low": "Faible",
+    "demand_medium": "Moyen",
+    "demand_high": "Élevé"
+  },
+  "rewards": {
+    "tag": "Reconnaissance",
+    "title": "Progressez en servant",
+    "sub": "Les niveaux sont calculés automatiquement selon les mois de déploiement actif complétés.",
+    "bronze": {
+      "name": "Bronze",
+      "duration": "1 mois actif · 18+",
+      "months": "1 mois actif"
+    },
+    "silver": {
+      "name": "Argent",
+      "duration": "3 mois actifs · 18+",
+      "months": "3 mois actifs"
+    },
+    "gold": {
+      "name": "Or",
+      "duration": "6 mois actifs · 18+",
+      "months": "6 mois actifs"
+    },
+    "platinum": {
+      "name": "Platine",
+      "duration": "1 année complète active · 18+",
+      "months": "1 an complet — Contrat gouvernemental"
+    },
+    "cert": "Certificat numérique vérifiable par QR",
+    "cash": "Allocation financière du département",
+    "title_role": "Titre de rôle officiel",
+    "contract": "Contrat gouvernemental formel (Admin UT)",
+    "leaderboard_title": "Meilleurs bénévoles de l'année",
+    "leaderboard_note": "Le classement affiche des données de démonstration. Les données en direct seront connectées en Phase 2.",
+    "col_rank": "Rang",
+    "col_volunteer": "Bénévole",
+    "col_commune": "Commune",
+    "col_department": "Département",
+    "col_months": "Mois actifs",
+    "col_tier": "Niveau",
+    "disclaimer": "Tous les bénévoles doivent avoir 18 ans ou plus au moment de l'inscription. Les niveaux sont confirmés par l'officier nodal. Les contrats Platine sont traités via le cadre RH de l'Administration UT."
+  },
+  "cta": {
+    "title": "Pondichéry a besoin de vous.",
+    "sub": "Rejoignez des citoyens qui font déjà la différence.",
+    "btn": "Commencer à contribuer aujourd'hui →"
+  },
+  "nodal": {
+    "portal_label": "Portail Officier Nodal",
+    "page_title": "Candidatures Bénévoles",
+    "bulk_sms": "SMS groupé",
+    "export_csv": "Exporter CSV",
+    "all": "Tous",
+    "pending": "En attente",
+    "review": "En révision",
+    "assigned": "Assigné",
+    "rejected": "Rejeté",
+    "search_placeholder": "Rechercher par nom, commune, département...",
+    "all_communes": "Toutes les communes",
+    "col_applicant": "Candidat",
+    "col_commune": "Commune",
+    "col_dept": "Département",
+    "col_score": "Score IA",
+    "col_role": "Rôle suggéré",
+    "col_status": "Statut",
+    "col_actions": "Actions",
+    "ai_label": "Évaluation Claude AI",
+    "ai_meta": "Généré par Claude API · Score MiniLM : {score} · L'officier prend la décision finale",
+    "show_ai": "▼ Évaluation IA",
+    "hide_ai": "▲ Masquer",
+    "btn_assign": "Assigner",
+    "btn_reject": "Rejeter",
+    "no_results": "Aucun candidat ne correspond à vos filtres.",
+    "modal_assign_title": "Assigner le bénévole",
+    "modal_assign_sub": "Confirmer l'attribution du rôle pour {name}",
+    "modal_reject_title": "Rejeter la candidature",
+    "modal_reject_sub": "Voulez-vous vraiment rejeter la candidature de {name} ?",
+    "modal_role_label": "Rôle attribué",
+    "modal_cancel": "Annuler",
+    "modal_confirm_assign": "Confirmer l'attribution",
+    "modal_confirm_reject": "Confirmer le rejet",
+    "toast_assigned": "Bénévole assigné avec succès.",
+    "toast_rejected": "Candidature rejetée.",
+    "toast_review": "Marqué pour révision.",
+    "access_required": "Accès officier nodal requis",
+    "access_link": "Se connecter en tant qu'officier nodal →"
+  },
+  "admin": {
+    "label": "Panneau Admin",
+    "page_title": "Vue d'ensemble de la plateforme",
+    "signed_in_as": "Connecté en tant que",
+    "export": "Exporter le rapport",
+    "announce": "Envoyer une annonce",
+    "tab_overview": "Vue d'ensemble",
+    "tab_departments": "Départements",
+    "tab_officers": "Officiers",
+    "tab_settings": "Paramètres",
+    "stat_volunteers": "Total bénévoles",
+    "stat_change_volunteers": "+34 ce mois",
+    "stat_deployments": "Déploiements actifs",
+    "stat_change_deployments": "4 communes",
+    "stat_depts": "Départements actifs",
+    "stat_change_depts": "Tous opérationnels",
+    "stat_platinum": "Bénévoles Platine",
+    "stat_change_platinum": "Éligibles au contrat gouvernemental",
+    "activity_title": "Activité récente",
+    "actions_title": "Actions rapides",
+    "commune_title": "Répartition par commune",
+    "col_dept": "Département",
+    "col_officer": "Officier nodal",
+    "col_volunteers": "Bénévoles actifs",
+    "col_open": "Rôles ouverts",
+    "col_actions": "Actions",
+    "manage": "Gérer →",
+    "open_suffix": "ouvert(s)",
+    "officers_title": "Gestion des officiers nodaux",
+    "officers_desc": "Ajouter, modifier et gérer les comptes des officiers nodaux par commune et département.",
+    "officers_btn": "+ Ajouter un officier nodal (Phase 2)",
+    "access_required": "Accès administrateur requis",
+    "access_link": "Se connecter en tant qu'administrateur →"
+  },
+  "dashboard": {
+    "greeting": "Bon retour, bénévole 👋",
+    "status": "Bénévole actif",
+    "role": "Aide à l'enregistrement des camps de santé · Commune de Pondichéry",
+    "tier_prog": "1 mois accompli · 2 de plus pour l'Argent",
+    "months": "Mois actifs",
+    "hours": "Heures servies",
+    "deployments": "Déploiements",
+    "assignment": "Mission actuelle",
+    "active": "● Actif",
+    "back": "← Retour à l'accueil",
+    "volunteer_since": "Bénévole depuis",
+    "bronze_tier": "Niveau Bronze",
+    "training_progress": "Progression de la formation",
+    "performance": "Retour sur les performances",
+    "notifications": "Notifications",
+    "quick_links": "Liens rapides",
+    "qr_checkin": "Pointer par QR",
+    "view_map": "Voir sur la carte",
+    "top_performer": "⭐ Meilleure performance",
+    "cert_download": "Télécharger le certificat",
+    "training_videos": "Vidéos de formation",
+    "contact_supervisor": "Contacter le superviseur",
+    "report_issue": "Signaler un problème",
+    "april_2025": "Avril 2025",
+    "assignment_event": "Camp de santé — Campagne de vaccination, Commune de Pondichéry",
+    "assignment_location": "Hôpital général du gouvernement, Rue Candappa Mudali",
+    "assignment_time": "Sam–Dim, 9h00 – 13h00",
+    "training_1": "Orientation camp de santé",
+    "training_2": "Procédures de saisie de données",
+    "training_3": "Communication avec les patients",
+    "training_4": "Protocoles d'urgence",
+    "start": "Commencer →",
+    "pongal_event": "Déploiement Fête Pongal",
+    "notif_1": "Nouveau module de formation disponible",
+    "notif_2": "Déploiement confirmé pour sam. 24 mai",
+    "notif_3": "Certificat émis pour le déploiement d'avril",
+    "time_2h": "il y a 2h",
+    "time_1d": "il y a 1j",
+    "time_3d": "il y a 3j"
+  },
+  "login": {
+    "choose_portal": "Se connecter à PondySevAi",
+    "choose_sub": "Choisissez votre portail pour continuer",
+    "vol_title": "Bénévole",
+    "vol_desc": "Accédez à votre tableau de bord, formation et statut de déploiement.",
+    "nodal_title": "Officier Nodal",
+    "nodal_desc": "Consultez les candidatures, les évaluations IA et assignez les rôles.",
+    "admin_title": "Admin",
+    "admin_desc": "Gérez les rôles, départements, officiers et paramètres de la plateforme.",
+    "sign_in_btn": "Se connecter →",
+    "new_volunteer": "Nouveau bénévole ?",
+    "register_link": "S'inscrire ici →",
+    "back": "Retour à PondySevai",
+    "send_otp": "Envoyer OTP",
+    "sending_otp": "Envoi de l'OTP…",
+    "change_number": "← Changer de numéro",
+    "password_label": "Mot de passe",
+    "demo_label": "Démo :",
+    "signing_in": "Connexion…",
+    "sign_in": "Se connecter",
+    "new_volunteer_q": "Nouveau bénévole ?",
+    "not_nodal": "Pas un officier nodal ?",
+    "volunteer_login_link": "Connexion bénévole →",
+    "otp_label": "OTP",
+    "otp_hint": "envoyé au +91 {phone}",
+    "err_phone": "Veuillez saisir un numéro de téléphone valide à 10 chiffres.",
+    "err_otp": "Veuillez saisir l'OTP à 6 chiffres.",
+    "err_id": "Veuillez saisir votre",
+    "err_password": "Veuillez saisir votre mot de passe.",
+    "err_invalid": "Identifiants invalides."
+  },
+  "register": {
+    "pill": "Candidature bénévole",
+    "title": "Candidature bénévole",
+    "sub": "Complétez votre profil ci-dessous. Votre candidature sera examinée sous 3 à 5 jours ouvrables.",
+    "security": "Données chiffrées et stockées en toute sécurité",
+    "step1": "Infos personnelles",
+    "step2": "Compétences et disponibilités",
+    "step3": "Préférences de rôle",
+    "step4": "Déclaration",
+    "next1": "Continuer — Compétences",
+    "next2": "Continuer — Préférences",
+    "next3": "Continuer — Déclaration",
+    "submit": "Soumettre la candidature",
+    "back": "Retour",
+    "success_title": "Candidature soumise !",
+    "success_sub": "Merci de postuler comme bénévole PondySevAi. Votre officier nodal examinera votre profil sous 3 à 5 jours.",
+    "save_ref": "Conservez ce numéro de référence.",
+    "another": "Inscrire une autre personne",
+    "home": "← Retour à PondySevAi",
+    "full_name": "Nom complet",
+    "full_name_hint": "Selon votre Aadhaar",
+    "dob": "Date de naissance",
+    "phone": "Numéro de téléphone",
+    "email": "E-mail (facultatif)",
+    "commune": "Commune",
+    "commune_placeholder": "Sélectionner une commune",
+    "gender": "Genre",
+    "address": "Adresse résidentielle",
+    "address_hint": "Rue, quartier, code postal",
+    "languages": "Langues parlées",
+    "qualifications": "Qualifications",
+    "availability": "Disponibilité",
+    "experience": "Expérience bénévole antérieure",
+    "experience_hint": "Décrivez vos expériences bénévoles précédentes, NSS/NCC, service communautaire...",
+    "mobility": "J'ai un handicap moteur",
+    "mobility_hint": "Les rôles à forte demande physique seront automatiquement exclus du matching IA.",
+    "departments_label": "Départements préférés",
+    "departments_hint": "Sélectionnez tout ce qui vous intéresse. L'IA trouvera la meilleure correspondance.",
+    "role_type": "Type de rôle préféré",
+    "motivation": "Pourquoi voulez-vous faire du bénévolat ?",
+    "motivation_hint": "Partagez votre motivation, votre expérience et ce que vous souhaitez apporter à Pondichéry...",
+    "motivation_ai_note": "Ceci est utilisé par l'IA pour générer un résumé de votre profil pour l'officier nodal.",
+    "ai_note": "Après soumission, Claude API génère une évaluation de 2 à 3 phrases de votre profil. L'officier prend la décision finale.",
+    "validation_step1": "Veuillez remplir tous les champs obligatoires.",
+    "decl1": "Je déclare que toutes les informations fournies sont vraies. Toute fausse information peut entraîner une disqualification.",
+    "decl2": "J'ai 18 ans ou plus à la date de cette candidature et je suis résident(e) de Pondichéry.",
+    "decl3": "Je consens à ce que mon profil soit examiné par un officier nodal et traité via l'analyse IA (Claude API).",
+    "decl4": "Je comprends que le bénévolat est un service non rémunéré (sauf les allocations au niveau Argent et au-dessus).",
+    "app_progress": "Progression de la candidature",
+    "confirm_decl": "Veuillez lire et confirmer chaque déclaration — toutes sont obligatoires.",
+    "gender_prefer": "Préfère ne pas dire",
+    "gender_female": "Femme",
+    "gender_male": "Homme",
+    "gender_other": "Autre",
+    "lang_tamil": "Tamoul",
+    "lang_english": "Anglais",
+    "lang_french": "Français",
+    "lang_telugu": "Télougou",
+    "lang_malayalam": "Malayâlam",
+    "qual_10th": "Niveau 10e",
+    "qual_12th": "+2 / Terminale",
+    "qual_diploma": "Diplôme",
+    "qual_bachelors": "Licence",
+    "qual_masters": "Master",
+    "qual_nss": "Formé NSS/NCC",
+    "qual_firstaid": "Certifié premiers secours",
+    "qual_driving": "Permis de conduire",
+    "avail_weekday_morning": "Jours de semaine (matin)",
+    "avail_weekday_evening": "Jours de semaine (soir)",
+    "avail_weekends": "Week-ends",
+    "avail_holidays": "Jours fériés",
+    "avail_flexible": "Flexible / Selon les besoins",
+    "role_field": "Terrain / Plein air",
+    "role_office": "Bureau / Administration",
+    "role_outreach": "Sensibilisation communautaire",
+    "role_tech": "Technique / Numérique",
+    "role_any": "N'importe quel rôle",
+    "dept_health": "Santé et médecine",
+    "dept_education": "Éducation",
+    "dept_welfare": "Aide sociale",
+    "dept_env": "Environnement et littoral",
+    "dept_digital": "Gouvernance numérique",
+    "dept_culture": "Culture et événements",
+    "dept_law": "Ordre public",
+    "dept_disaster": "Gestion des catastrophes",
+    "dept_municipal": "Administration municipale",
+    "dept_women": "Femmes et protection de l'enfance"
+  },
+  "footer": {
+    "desc": "Une plateforme civique de bénévolat connectant les citoyens de Pondichéry aux départements gouvernementaux.",
+    "platform": "Plateforme",
+    "register": "S'inscrire",
+    "departments": "Départements",
+    "how": "Comment ça marche",
+    "leaderboard": "Classement",
+    "government": "Gouvernement",
+    "admin": "Connexion officier nodal",
+    "postrole": "Publier un rôle",
+    "reports": "Télécharger les rapports",
+    "info": "Info",
+    "about": "À propos du projet",
+    "privacy": "Politique de confidentialité",
+    "contact": "Contact",
+    "copy": "© 2025 PondySevai. Initiative du gouvernement de Pondichéry.",
+    "initiative": "Une initiative de Decision Minds"
+  },
+  "roles": {
+    "depts": {
+      "law_order": "Ordre public / Circulation",
+      "education": "Éducation",
+      "health_san": "Santé & Hygiène",
+      "environment": "Environnement & Littoral",
+      "tourism": "Tourisme & Événements culturels",
+      "disaster": "Gestion des catastrophes",
+      "municipal": "Administration municipale",
+      "women_child": "Femmes & Protection de l'enfance"
+    },
+    "r01": {
+      "role": "Assistant circulation",
+      "qual": "Forme physique, tamoul, règles de base de la route"
+    },
+    "r02": {
+      "role": "Gestion du stationnement",
+      "qual": "Conscience spatiale, gestion de foule"
+    },
+    "r03": {
+      "role": "Guide sécurité piétons",
+      "qual": "Communication, vigilance visuelle"
+    },
+    "r04": {
+      "role": "Agent de contrôle des foules",
+      "qual": "Expérience NSS/NCC préférable, coordination d'équipe"
+    },
+    "r05": {
+      "role": "Coordinateur de voie d'urgence",
+      "qual": "Prise de décision rapide, forme physique"
+    },
+    "r06": {
+      "role": "Assistant enseignant (primaire)",
+      "qual": "Niveau minimum 10e, maîtrise tamoul/anglais"
+    },
+    "r07": {
+      "role": "Facilitateur alphabétisation adulte",
+      "qual": "Patience, alphabétisation tamoule, enseignement de base"
+    },
+    "r08": {
+      "role": "Formateur alphabétisation numérique",
+      "qual": "Bases informatiques, peut enseigner aux seniors"
+    },
+    "r09": {
+      "role": "Bénévole soutien bibliothèque",
+      "qual": "Organisation, lecture tamoul/anglais"
+    },
+    "r10": {
+      "role": "Aide enregistrement camp de santé",
+      "qual": "Saisie de données, communication en tamoul"
+    },
+    "r11": {
+      "role": "Coordinateur collecte de sang",
+      "qual": "Sensibilisation santé, empathie"
+    },
+    "r12": {
+      "role": "Assistant camp de vaccination",
+      "qual": "Capacité à suivre les instructions du personnel médical"
+    },
+    "r13": {
+      "role": "Soutien premiers secours (événements)",
+      "qual": "Certification premiers secours requise"
+    },
+    "r14": {
+      "role": "Bénévole nettoyage plages",
+      "qual": "Forme physique, tolérance au plein air"
+    },
+    "r15": {
+      "role": "Aide plantation de mangroves",
+      "qual": "Forme physique, travail en extérieur"
+    },
+    "r16": {
+      "role": "Éducateur tri des déchets",
+      "qual": "Connaissance des catégories de déchets"
+    },
+    "r17": {
+      "role": "Guide information touristique",
+      "qual": "Anglais + tamoul, français préféré, histoire de Pondy"
+    },
+    "r18": {
+      "role": "Assistant promenade du patrimoine",
+      "qual": "Connaissance du quartier français, histoire"
+    },
+    "r19": {
+      "role": "Bénévole Fête Nationale",
+      "qual": "Gestion de foule, français un atout"
+    },
+    "r20": {
+      "role": "Coordinateur événement Pongal/culturel",
+      "qual": "Expérience événements culturels, tamoul"
+    },
+    "r21": {
+      "role": "Bénévole préparation cyclone",
+      "qual": "Formation de base en gestion de catastrophe"
+    },
+    "r22": {
+      "role": "Aide distribution secours inondation",
+      "qual": "Force physique, coordination logistique"
+    },
+    "r23": {
+      "role": "Bénévole sensibilisation électorale",
+      "qual": "Communication, maîtrise du tamoul"
+    },
+    "r24": {
+      "role": "Aide collecte données recensement",
+      "qual": "Numératie, visites domicile à domicile"
+    },
+    "r25": {
+      "role": "Visiteur bien-être personnes âgées",
+      "qual": "Empathie, patience, soins aux personnes âgées"
+    },
+    "r26": {
+      "role": "Bénévole soutien Anganwadi",
+      "qual": "Sensibilisation à la garde d'enfants, tamoul"
+    },
+    "r27": {
+      "role": "Facilitateur groupes féminins SHG",
+      "qual": "Expérience en organisation communautaire"
+    }
+  },
+  "nodal_data": {
+    "a1_name": "Kavitha S.",
+    "a1_dept": "Santé et médecine",
+    "a1_role": "Aide enregistrement camp de santé",
+    "a1_ai": "Forte communication en tamoul et expérience NSS. Correspond étroitement aux rôles de camp de santé et de vaccination. La disponibilité s'aligne bien avec le calendrier de déploiement du week-end.",
+    "a2_name": "Rajan M.",
+    "a2_dept": "Éducation",
+    "a2_role": "Assistant enseignant (primaire)",
+    "a2_ai": "Licence en éducation, maîtrise du tamoul et de l'anglais. Recommandé pour les rôles de soutien scolaire primaire basé sur la correspondance des qualifications.",
+    "a3_name": "Meena P.",
+    "a3_dept": "Environnement et littoral",
+    "a3_role": "Bénévole nettoyage plages",
+    "a3_ai": "Grande forme physique, expérience en plein air, disponibilité le week-end. Forte correspondance pour les opérations de nettoyage côtier. Aucune contrainte de mobilité signalée.",
+    "a4_name": "Suresh K.",
+    "a4_dept": "Gestion des catastrophes",
+    "a4_role": "Aide distribution secours inondation",
+    "a4_ai": "Forme physique et formation de base en gestion de catastrophe complétées. Adapté aux rôles de coordination logistique. Disponibilité en semaine limitée.",
+    "a5_name": "Priya R.",
+    "a5_dept": "Santé et médecine",
+    "a5_role": "Coordinateur collecte de sang",
+    "a5_ai": "Profil axé sur l'empathie avec sensibilisation à la santé. Certification premiers secours préférable mais non détenue. Recommander association avec personnel formé.",
+    "a6_name": "Anand V.",
+    "a6_dept": "Tourisme et culture",
+    "a6_role": "Guide information touristique",
+    "a6_ai": "Trilingue (tamoul, anglais, français), solide connaissance du patrimoine de Pondy. Excellente correspondance de profil pour le rôle de guide touristique."
+  },
+  "admin_data": {
+    "act1_event": "Nouveau bénévole inscrit",
+    "act1_detail": "Priya R. — Commune de Pondichéry",
+    "act2_event": "Attribution de rôle approuvée",
+    "act2_detail": "Rajan M. → Assistant enseignant, Villianur",
+    "act3_event": "Connexion officier nodal",
+    "act3_detail": "officer@puducherry.gov.in",
+    "act4_event": "Nouveau rôle publié",
+    "act4_detail": "Aide distribution secours inondation — Bahour",
+    "act5_event": "Certificat émis",
+    "act5_detail": "Cert Bronze — Kavitha S.",
+    "act6_event": "Mise à niveau de niveau",
+    "act6_detail": "Meena P. mise à niveau au niveau Or",
+    "qa1": "Ajouter officier nodal",
+    "qa2": "Publier nouveau rôle",
+    "qa3": "Télécharger CSV",
+    "qa4": "Envoyer SMS groupé",
+    "qa5": "Voir tous les certificats",
+    "qa6": "Paramètres système",
+    "s1_title": "Langues & Localisation",
+    "s1_desc": "Gérer le contenu tamoul, anglais, français",
+    "s2_title": "Paramètres matching IA",
+    "s2_desc": "Ajuster les prompts Claude API et les seuils MiniLM",
+    "s3_title": "Paramètres SMS / OTP",
+    "s3_desc": "Clés API Twilio / MSG91 et modèles",
+    "s4_title": "Règles niveaux récompenses",
+    "s4_desc": "Modifier les seuils et définitions des avantages",
+    "s5_title": "Modèles de certificats",
+    "s5_desc": "Télécharger et gérer les designs de certificats QR",
+    "s6_title": "Contrôle d'accès",
+    "s6_desc": "Gérer les permissions administrateur et officier",
+    "s_configure": "Configurer",
+    "s_upload": "Télécharger",
+    "s_manage": "Gérer",
+    "dept_health": "Santé et médecine",
+    "dept_education": "Éducation",
+    "dept_environment": "Environnement et littoral",
+    "dept_law": "Ordre public / Circulation",
+    "dept_tourism": "Tourisme et culture",
+    "dept_disaster": "Gestion des catastrophes",
+    "officer_ramesh": "Dr. Ramesh K.",
+    "officer_kavitha": "Mme Kavitha N.",
+    "officer_arjun": "M. Arjun S.",
+    "officer_murugan": "Inspecteur Murugan",
+    "officer_francois": "M. François D.",
+    "officer_suresh": "M. Suresh B.",
+    "commune_volunteers": "bénévoles",
+    "time_2min": "il y a 2 min",
+    "time_15min": "il y a 15 min",
+    "time_1h": "il y a 1h",
+    "time_2h": "il y a 2h",
+    "time_3h": "il y a 3h",
+    "time_5h": "il y a 5h"
+  },
+  "lb": {
+    "v1_name": "Kavitha S.",
+    "v1_dept": "Santé et médecine",
+    "v1_tier": "Platine",
+    "v2_name": "Rajan M.",
+    "v2_dept": "Éducation",
+    "v2_tier": "Or",
+    "v3_name": "Meena P.",
+    "v3_dept": "Environnement",
+    "v3_tier": "Or",
+    "v4_name": "Suresh K.",
+    "v4_dept": "Gestion des catastrophes",
+    "v4_tier": "Or",
+    "v5_name": "Priya R.",
+    "v5_dept": "Santé et médecine",
+    "v5_tier": "Argent",
+    "v6_name": "Anand V.",
+    "v6_dept": "Tourisme et culture",
+    "v6_tier": "Argent",
+    "v7_name": "Deepa N.",
+    "v7_dept": "Éducation",
+    "v7_tier": "Bronze",
+    "v8_name": "Karthik L.",
+    "v8_dept": "Administration municipale",
+    "v8_tier": "Bronze"
+  }
+}

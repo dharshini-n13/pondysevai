@@ -1,0 +1,618 @@
+{
+  "nav": {
+    "how": "How It Works",
+    "departments": "Departments",
+    "rewards": "Rewards",
+    "about": "About",
+    "cta": "Become a Volunteer",
+    "my_dashboard": "My Dashboard",
+    "sign_in": "Sign In",
+    "sign_out": "Sign Out",
+    "initiative_by": "An Initiative by"
+  },
+  "hero": {
+    "pill": "Government of Puducherry — Civic Volunteer Platform",
+    "title": "Give your time.\nMake Puducherry\nbetter.",
+    "subtitle": "PondySevai connects committed citizens with the government departments that need them — verified, trained, and recognised.",
+    "cta1": "Register as a Volunteer",
+    "cta2": "See how it works"
+  },
+  "stats": {
+    "communes": "Communes Covered",
+    "departments": "Govt. Departments",
+    "volunteers": "Volunteers Registered",
+    "register": "Minutes to Register",
+    "powered": "Powered by Claude AI"
+  },
+  "how": {
+    "tag": "Process",
+    "title": "Four steps to civic impact",
+    "sub": "From registration to your first deployment — your profile is matched to open roles by AI.",
+    "step1": {
+      "title": "Create your profile",
+      "desc": "Register with your skills, languages, availability, and commune."
+    },
+    "step2": {
+      "title": "Get matched to a role",
+      "desc": "Claude AI assesses your profile and recommends the best-fit roles."
+    },
+    "step3": {
+      "title": "Train and deploy",
+      "desc": "Complete a short training module, then check in at your site via QR code."
+    },
+    "step4": {
+      "title": "Get recognised",
+      "desc": "Receive QR-verifiable certificates and progress through reward tiers."
+    }
+  },
+  "dept": {
+    "tag": "Departments",
+    "title": "Where your skills are needed",
+    "viewall": "View All Departments",
+    "health": {
+      "name": "Health & Medical",
+      "desc": "Support vaccination drives, health camps, and community health awareness.",
+      "roles": "6 open roles"
+    },
+    "education": {
+      "name": "Education & Literacy",
+      "desc": "Teach digital skills, assist in public schools, and run literacy drives.",
+      "roles": "5 open roles"
+    },
+    "welfare": {
+      "name": "Social Welfare",
+      "desc": "Assist vulnerable communities, distribute welfare scheme benefits.",
+      "roles": "4 open roles"
+    },
+    "environment": {
+      "name": "Environment & Coastal",
+      "desc": "Beach clean-ups, mangrove drives, waste awareness campaigns.",
+      "roles": "5 open roles"
+    },
+    "digital": {
+      "name": "Digital Governance",
+      "desc": "Help citizens navigate online government services and schemes.",
+      "roles": "3 open roles"
+    },
+    "culture": {
+      "name": "Culture & Events",
+      "desc": "Organise heritage walks, Bastille Day, Pongal, and civic festivals.",
+      "roles": "6 open roles"
+    }
+  },
+  "depts_page": {
+    "pill": "All Government Departments & Roles",
+    "title_1": "All",
+    "title_2": "Departments",
+    "title_3": "& Volunteer Roles",
+    "subtitle": "Browse all open volunteer roles across government departments. Physical demand tags are used for AI role matching.",
+    "col_role": "Role",
+    "col_qualifications": "Key Qualifications",
+    "col_demand": "Demand",
+    "roles_suffix": "roles",
+    "demand_low": "Low",
+    "demand_medium": "Medium",
+    "demand_high": "High"
+  },
+  "rewards": {
+    "tag": "Recognition",
+    "title": "Progress as you serve",
+    "sub": "Tiers are calculated automatically based on completed active deployment months.",
+    "bronze": {
+      "name": "Bronze",
+      "duration": "1 month active · 18+",
+      "months": "1 active month"
+    },
+    "silver": {
+      "name": "Silver",
+      "duration": "3 months active · 18+",
+      "months": "3 active months"
+    },
+    "gold": {
+      "name": "Gold",
+      "duration": "6 months active · 18+",
+      "months": "6 active months"
+    },
+    "platinum": {
+      "name": "Platinum",
+      "duration": "1 full year active · 18+",
+      "months": "1 full year — Govt. Contract"
+    },
+    "cert": "QR-verifiable digital certificate",
+    "cash": "Financial allowance from department",
+    "title_role": "Official role title",
+    "contract": "Formal government contract (UT Admin)",
+    "leaderboard_title": "Top Volunteers This Year",
+    "leaderboard_note": "Leaderboard shows mock data. Live data connects in Phase 2 with the backend.",
+    "col_rank": "Rank",
+    "col_volunteer": "Volunteer",
+    "col_commune": "Commune",
+    "col_department": "Department",
+    "col_months": "Active Months",
+    "col_tier": "Tier",
+    "disclaimer": "All volunteers must be 18+ at time of registration. Tiers confirmed by nodal officer. Platinum contracts processed through UT Administration HR framework."
+  },
+  "cta": {
+    "title": "Puducherry needs you.",
+    "sub": "Join citizens already making a difference.",
+    "btn": "Start Contributing Today →"
+  },
+  "nodal": {
+    "portal_label": "Nodal Officer Portal",
+    "page_title": "Volunteer Applications",
+    "bulk_sms": "Bulk SMS",
+    "export_csv": "Export CSV",
+    "all": "All",
+    "pending": "Pending",
+    "review": "Review",
+    "assigned": "Assigned",
+    "rejected": "Rejected",
+    "search_placeholder": "Search by name, commune, department...",
+    "all_communes": "All Communes",
+    "col_applicant": "Applicant",
+    "col_commune": "Commune",
+    "col_dept": "Department",
+    "col_score": "AI Score",
+    "col_role": "Suggested Role",
+    "col_status": "Status",
+    "col_actions": "Actions",
+    "ai_label": "Claude AI Assessment",
+    "ai_meta": "Generated by Claude API · MiniLM score: {score} · Officer makes final placement decision",
+    "show_ai": "▼ AI Assessment",
+    "hide_ai": "▲ Hide AI",
+    "btn_assign": "Assign",
+    "btn_reject": "Reject",
+    "no_results": "No applicants match your filters.",
+    "modal_assign_title": "Assign Volunteer",
+    "modal_assign_sub": "Confirm role assignment for {name}",
+    "modal_reject_title": "Reject Application",
+    "modal_reject_sub": "Are you sure you want to reject {name}'s application?",
+    "modal_role_label": "Assigned Role",
+    "modal_cancel": "Cancel",
+    "modal_confirm_assign": "Confirm Assignment",
+    "modal_confirm_reject": "Confirm Rejection",
+    "toast_assigned": "Volunteer assigned successfully.",
+    "toast_rejected": "Application rejected.",
+    "toast_review": "Marked for review.",
+    "access_required": "Nodal Officer access required",
+    "access_link": "Sign in as Nodal Officer →"
+  },
+  "admin": {
+    "label": "Admin Panel",
+    "page_title": "Platform Overview",
+    "signed_in_as": "Signed in as",
+    "export": "Export Report",
+    "announce": "Send Announcement",
+    "tab_overview": "Overview",
+    "tab_departments": "Departments",
+    "tab_officers": "Officers",
+    "tab_settings": "Settings",
+    "stat_volunteers": "Total Volunteers",
+    "stat_change_volunteers": "+34 this month",
+    "stat_deployments": "Active Deployments",
+    "stat_change_deployments": "4 communes",
+    "stat_depts": "Departments Active",
+    "stat_change_depts": "All operational",
+    "stat_platinum": "Platinum Volunteers",
+    "stat_change_platinum": "Govt. contract eligible",
+    "activity_title": "Recent Activity",
+    "actions_title": "Quick Actions",
+    "commune_title": "Commune Breakdown",
+    "col_dept": "Department",
+    "col_officer": "Nodal Officer",
+    "col_volunteers": "Active Volunteers",
+    "col_open": "Open Roles",
+    "col_actions": "Actions",
+    "manage": "Manage →",
+    "open_suffix": "open",
+    "officers_title": "Nodal Officer Management",
+    "officers_desc": "Add, edit, and manage nodal officer accounts per commune and department.",
+    "officers_btn": "+ Add Nodal Officer (Phase 2)",
+    "access_required": "Admin access required",
+    "access_link": "Sign in as admin →"
+  },
+  "dashboard": {
+    "greeting": "Welcome back, Volunteer 👋",
+    "status": "Active Volunteer",
+    "role": "Health Camp Registration Aide · Puducherry Commune",
+    "tier_prog": "1 month completed · 2 more months for Silver",
+    "months": "Active Months",
+    "hours": "Hours Served",
+    "deployments": "Deployments",
+    "assignment": "Current Assignment",
+    "active": "● Active",
+    "back": "← Back to Home",
+    "volunteer_since": "Volunteer since",
+    "bronze_tier": "Bronze Tier",
+    "training_progress": "Training Progress",
+    "performance": "Performance Feedback",
+    "notifications": "Notifications",
+    "quick_links": "Quick Links",
+    "qr_checkin": "QR Check-in",
+    "view_map": "View on Map",
+    "top_performer": "⭐ Top Performer",
+    "cert_download": "Download Certificate",
+    "training_videos": "Training Videos",
+    "contact_supervisor": "Contact Supervisor",
+    "report_issue": "Report an Issue",
+    "april_2025": "April 2025",
+    "assignment_event": "Health Camp — Vaccination Drive, Puducherry Commune",
+    "assignment_location": "Government General Hospital, Candappa Mudali St.",
+    "assignment_time": "Sat–Sun, 9:00 AM – 1:00 PM",
+    "training_1": "Health Camp Orientation",
+    "training_2": "Data Entry Procedures",
+    "training_3": "Patient Communication",
+    "training_4": "Emergency Protocols",
+    "start": "Start →",
+    "pongal_event": "Pongal Event Deployment",
+    "notif_1": "New training module available",
+    "notif_2": "Deployment confirmed for Sat 24 May",
+    "notif_3": "Certificate issued for April deployment",
+    "time_2h": "2h ago",
+    "time_1d": "1d ago",
+    "time_3d": "3d ago"
+  },
+  "login": {
+    "choose_portal": "Sign in to PondySevAi",
+    "choose_sub": "Choose your portal to continue",
+    "vol_title": "Volunteer",
+    "vol_desc": "Access your dashboard, training, and deployment status.",
+    "nodal_title": "Nodal Officer",
+    "nodal_desc": "Review applicants, view AI assessments, and assign roles.",
+    "admin_title": "Admin",
+    "admin_desc": "Manage roles, departments, officers, and platform settings.",
+    "sign_in_btn": "Sign in →",
+    "new_volunteer": "New volunteer?",
+    "register_link": "Register here →",
+    "back": "Back to PondySevai",
+    "send_otp": "Send OTP",
+    "sending_otp": "Sending OTP…",
+    "change_number": "← Change number",
+    "password_label": "Password",
+    "demo_label": "Demo:",
+    "signing_in": "Signing in…",
+    "sign_in": "Sign in",
+    "new_volunteer_q": "New volunteer?",
+    "not_nodal": "Not a nodal officer?",
+    "volunteer_login_link": "Volunteer login →",
+    "otp_label": "OTP",
+    "otp_hint": "sent to +91 {phone}",
+    "err_phone": "Please enter a valid 10-digit phone number.",
+    "err_otp": "Please enter the 6-digit OTP.",
+    "err_id": "Please enter your",
+    "err_password": "Please enter your password.",
+    "err_invalid": "Invalid credentials."
+  },
+  "register": {
+    "pill": "Volunteer Application",
+    "title": "Volunteer Application",
+    "sub": "Complete your profile below. Your application will be reviewed within 3–5 working days.",
+    "security": "Data encrypted and stored securely",
+    "step1": "Personal Info",
+    "step2": "Skills & Availability",
+    "step3": "Role Preferences",
+    "step4": "Declaration",
+    "next1": "Continue — Skills",
+    "next2": "Continue — Preferences",
+    "next3": "Continue — Declaration",
+    "submit": "Submit Application",
+    "back": "Back",
+    "success_title": "Application Submitted!",
+    "success_sub": "Thank you for applying as a PondySevAi volunteer. Your nodal officer will review your profile within 3–5 days.",
+    "save_ref": "Save this reference number.",
+    "another": "Register Another Person",
+    "home": "← Back to PondySevai",
+    "full_name": "Full Name",
+    "full_name_hint": "As per Aadhaar",
+    "dob": "Date of Birth",
+    "phone": "Phone Number",
+    "email": "Email (optional)",
+    "commune": "Commune",
+    "commune_placeholder": "Select commune",
+    "gender": "Gender",
+    "address": "Residential Address",
+    "address_hint": "Street, area, pin code",
+    "languages": "Languages spoken",
+    "qualifications": "Qualifications",
+    "availability": "Availability",
+    "experience": "Prior volunteering experience",
+    "experience_hint": "Describe any previous volunteer work, NSS/NCC, community service...",
+    "mobility": "I have a mobility impairment",
+    "mobility_hint": "This will automatically exclude high-physical-demand roles from AI matching.",
+    "departments_label": "Preferred departments",
+    "departments_hint": "Select all that interest you. AI matching will find the best fit within your selection.",
+    "role_type": "Role type preference",
+    "motivation": "Why do you want to volunteer?",
+    "motivation_hint": "Share your motivation, relevant experience, and what you hope to contribute to Puducherry...",
+    "motivation_ai_note": "This is used by the AI to generate your profile summary for the nodal officer.",
+    "ai_note": "After submission, Claude API generates a 2–3 sentence assessment of your profile, presented to your nodal officer. The officer makes the final placement decision.",
+    "validation_step1": "Please fill all required fields.",
+    "decl1": "I declare that all information provided is true and correct. False information may result in disqualification.",
+    "decl2": "I am 18 years of age or above and a resident of Puducherry.",
+    "decl3": "I consent to my profile being reviewed by a nodal officer and processed using AI analysis (Claude API).",
+    "decl4": "I understand volunteering is unpaid service (except allowances at Silver tier and above).",
+    "app_progress": "Application Progress",
+    "confirm_decl": "Please read and confirm each declaration — all are required.",
+    "gender_prefer": "Prefer not to say",
+    "gender_female": "Female",
+    "gender_male": "Male",
+    "gender_other": "Other",
+    "lang_tamil": "Tamil",
+    "lang_english": "English",
+    "lang_french": "French",
+    "lang_telugu": "Telugu",
+    "lang_malayalam": "Malayalam",
+    "qual_10th": "10th Standard",
+    "qual_12th": "+2 / HSC",
+    "qual_diploma": "Diploma",
+    "qual_bachelors": "Bachelor's degree",
+    "qual_masters": "Master's degree",
+    "qual_nss": "NSS/NCC trained",
+    "qual_firstaid": "First Aid certified",
+    "qual_driving": "Driver's license",
+    "avail_weekday_morning": "Weekdays (morning)",
+    "avail_weekday_evening": "Weekdays (evening)",
+    "avail_weekends": "Weekends",
+    "avail_holidays": "Public holidays",
+    "avail_flexible": "Flexible / As needed",
+    "role_field": "Field / Outdoor",
+    "role_office": "Office / Administration",
+    "role_outreach": "Community Outreach",
+    "role_tech": "Technical / Digital",
+    "role_any": "Any role",
+    "dept_health": "Health & Medical",
+    "dept_education": "Education",
+    "dept_welfare": "Social Welfare",
+    "dept_env": "Environment & Coastal",
+    "dept_digital": "Digital Governance",
+    "dept_culture": "Culture & Events",
+    "dept_law": "Law & Order",
+    "dept_disaster": "Disaster Management",
+    "dept_municipal": "Municipal Administration",
+    "dept_women": "Women & Child Welfare"
+  },
+  "footer": {
+    "desc": "A civic volunteering platform connecting Puducherry citizens with government departments.",
+    "platform": "Platform",
+    "register": "Register",
+    "departments": "Departments",
+    "how": "How It Works",
+    "leaderboard": "Leaderboard",
+    "government": "Government",
+    "admin": "Nodal Officer Login",
+    "postrole": "Post a Role",
+    "reports": "Download Reports",
+    "info": "Info",
+    "about": "About the Project",
+    "privacy": "Privacy Policy",
+    "contact": "Contact",
+    "copy": "© 2025 PondySevai. Government of Puducherry Initiative.",
+    "initiative": "An Initiative by Decision Minds"
+  },
+  "roles": {
+    "depts": {
+      "law_order": "Law & Order / Traffic",
+      "education": "Education",
+      "health_san": "Health & Sanitation",
+      "environment": "Environment & Coastal",
+      "tourism": "Tourism & Cultural Events",
+      "disaster": "Disaster Management",
+      "municipal": "Municipal & Administration",
+      "women_child": "Women & Child Welfare"
+    },
+    "r01": {
+      "role": "Traffic assistant",
+      "qual": "Physical fitness, Tamil, basic road rules"
+    },
+    "r02": {
+      "role": "Parking management",
+      "qual": "Spatial awareness, crowd handling"
+    },
+    "r03": {
+      "role": "Pedestrian safety guide",
+      "qual": "Communication, visibility awareness"
+    },
+    "r04": {
+      "role": "Crowd control officer",
+      "qual": "NSS/NCC experience preferred, team coordination"
+    },
+    "r05": {
+      "role": "Emergency lane coordinator",
+      "qual": "Quick decision-making, physical fitness"
+    },
+    "r06": {
+      "role": "Teaching assistant (primary)",
+      "qual": "10th/+2 minimum, Tamil/English fluency"
+    },
+    "r07": {
+      "role": "Adult literacy facilitator",
+      "qual": "Patience, Tamil literacy, basic teaching"
+    },
+    "r08": {
+      "role": "Digital literacy trainer",
+      "qual": "Computer basics, can teach seniors"
+    },
+    "r09": {
+      "role": "Library support volunteer",
+      "qual": "Organisation, Tamil/English reading"
+    },
+    "r10": {
+      "role": "Health camp registration aide",
+      "qual": "Data entry, Tamil communication"
+    },
+    "r11": {
+      "role": "Blood donation drive coordinator",
+      "qual": "Health awareness, empathy"
+    },
+    "r12": {
+      "role": "Vaccination camp helper",
+      "qual": "Ability to follow medical staff direction"
+    },
+    "r13": {
+      "role": "First aid support (events)",
+      "qual": "First aid certification required"
+    },
+    "r14": {
+      "role": "Beach cleaning drive volunteer",
+      "qual": "Physical fitness, outdoor tolerance"
+    },
+    "r15": {
+      "role": "Mangrove plantation aide",
+      "qual": "Physical fitness, outdoor work"
+    },
+    "r16": {
+      "role": "Waste segregation educator",
+      "qual": "Awareness of waste categories"
+    },
+    "r17": {
+      "role": "Tourist information guide",
+      "qual": "English + Tamil, French preferred, Pondy history"
+    },
+    "r18": {
+      "role": "Heritage walk assistant",
+      "qual": "Knowledge of French Quarter, history"
+    },
+    "r19": {
+      "role": "Bastille Day event volunteer",
+      "qual": "Crowd management, French language a plus"
+    },
+    "r20": {
+      "role": "Pongal/cultural event coordinator",
+      "qual": "Cultural event experience, Tamil"
+    },
+    "r21": {
+      "role": "Cyclone preparedness volunteer",
+      "qual": "Basic disaster training"
+    },
+    "r22": {
+      "role": "Flood relief distribution aide",
+      "qual": "Physical strength, logistics coordination"
+    },
+    "r23": {
+      "role": "Voter awareness campaign volunteer",
+      "qual": "Communication, Tamil fluency"
+    },
+    "r24": {
+      "role": "Census data collection aide",
+      "qual": "Numeracy, house-to-house visits"
+    },
+    "r25": {
+      "role": "Senior citizen welfare visitor",
+      "qual": "Empathy, patience, elder care"
+    },
+    "r26": {
+      "role": "Anganwadi support volunteer",
+      "qual": "Child care awareness, Tamil"
+    },
+    "r27": {
+      "role": "Women SHG facilitator",
+      "qual": "Community organisation experience"
+    }
+  },
+  "nodal_data": {
+    "a1_name": "Kavitha S.",
+    "a1_dept": "Health & Medical",
+    "a1_role": "Health Camp Registration Aide",
+    "a1_ai": "Strong Tamil communication and NSS experience. Closely matches health camp and vaccination roles. Availability aligns well with weekend deployment schedule.",
+    "a2_name": "Rajan M.",
+    "a2_dept": "Education",
+    "a2_role": "Teaching Assistant (Primary)",
+    "a2_ai": "Bachelor's degree in Education, fluent in Tamil and English. Recommended for primary school support roles based on qualification match.",
+    "a3_name": "Meena P.",
+    "a3_dept": "Environment & Coastal",
+    "a3_role": "Beach Cleaning Drive Volunteer",
+    "a3_ai": "High physical fitness, outdoor experience, weekend availability. Strong match for coastal clean-up drives. No mobility constraints reported.",
+    "a4_name": "Suresh K.",
+    "a4_dept": "Disaster Management",
+    "a4_role": "Flood Relief Distribution Aide",
+    "a4_ai": "Physical fitness and basic disaster training completed. Suitable for logistics coordination roles. Weekday availability is limited.",
+    "a5_name": "Priya R.",
+    "a5_dept": "Health & Medical",
+    "a5_role": "Blood Donation Drive Coordinator",
+    "a5_ai": "Empathy-focused profile with health awareness. First aid certification preferred but not currently held. Recommend pairing with trained staff.",
+    "a6_name": "Anand V.",
+    "a6_dept": "Tourism & Culture",
+    "a6_role": "Tourist Information Guide",
+    "a6_ai": "Trilingual (Tamil, English, French), strong knowledge of Pondy heritage. Excellent profile match for tourism guide role."
+  },
+  "admin_data": {
+    "act1_event": "New volunteer registered",
+    "act1_detail": "Priya R. — Puducherry Commune",
+    "act2_event": "Role assignment approved",
+    "act2_detail": "Rajan M. → Teaching Assistant, Villianur",
+    "act3_event": "Nodal officer login",
+    "act3_detail": "officer@puducherry.gov.in",
+    "act4_event": "New role posted",
+    "act4_detail": "Flood Relief Distribution Aide — Bahour",
+    "act5_event": "Certificate issued",
+    "act5_detail": "Bronze cert — Kavitha S.",
+    "act6_event": "Tier upgrade",
+    "act6_detail": "Meena P. upgraded to Gold tier",
+    "qa1": "Add Nodal Officer",
+    "qa2": "Post New Role",
+    "qa3": "Download CSV",
+    "qa4": "Send SMS Blast",
+    "qa5": "View All Certs",
+    "qa6": "System Settings",
+    "s1_title": "Languages & Localisation",
+    "s1_desc": "Manage Tamil, English, French content",
+    "s2_title": "AI Matching Settings",
+    "s2_desc": "Adjust Claude API prompts and MiniLM thresholds",
+    "s3_title": "SMS / OTP Settings",
+    "s3_desc": "Twilio / MSG91 API keys and templates",
+    "s4_title": "Reward Tier Rules",
+    "s4_desc": "Edit tier thresholds and perk definitions",
+    "s5_title": "Certificate Templates",
+    "s5_desc": "Upload and manage QR certificate designs",
+    "s6_title": "Access Control",
+    "s6_desc": "Manage admin and officer permissions",
+    "s_configure": "Configure",
+    "s_upload": "Upload",
+    "s_manage": "Manage",
+    "dept_health": "Health & Medical",
+    "dept_education": "Education",
+    "dept_environment": "Environment & Coastal",
+    "dept_law": "Law & Order / Traffic",
+    "dept_tourism": "Tourism & Culture",
+    "dept_disaster": "Disaster Management",
+    "officer_ramesh": "Dr. Ramesh K.",
+    "officer_kavitha": "Ms. Kavitha N.",
+    "officer_arjun": "Mr. Arjun S.",
+    "officer_murugan": "Inspector Murugan",
+    "officer_francois": "Mr. François D.",
+    "officer_suresh": "Mr. Suresh B.",
+    "commune_volunteers": "volunteers",
+    "time_2min": "2 min ago",
+    "time_15min": "15 min ago",
+    "time_1h": "1h ago",
+    "time_2h": "2h ago",
+    "time_3h": "3h ago",
+    "time_5h": "5h ago"
+  },
+  "lb": {
+    "v1_name": "Kavitha S.",
+    "v1_dept": "Health & Medical",
+    "v1_tier": "Platinum",
+    "v2_name": "Rajan M.",
+    "v2_dept": "Education",
+    "v2_tier": "Gold",
+    "v3_name": "Meena P.",
+    "v3_dept": "Environment",
+    "v3_tier": "Gold",
+    "v4_name": "Suresh K.",
+    "v4_dept": "Disaster Management",
+    "v4_tier": "Gold",
+    "v5_name": "Priya R.",
+    "v5_dept": "Health & Medical",
+    "v5_tier": "Silver",
+    "v6_name": "Anand V.",
+    "v6_dept": "Tourism & Culture",
+    "v6_tier": "Silver",
+    "v7_name": "Deepa N.",
+    "v7_dept": "Education",
+    "v7_tier": "Bronze",
+    "v8_name": "Karthik L.",
+    "v8_dept": "Municipal",
+    "v8_tier": "Bronze"
+  }
+}
