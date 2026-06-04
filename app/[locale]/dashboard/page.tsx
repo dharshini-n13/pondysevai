@@ -394,18 +394,34 @@ export default function DashboardPage() {
                 <div className="h-full rounded-full transition-all" style={{ width: `${progressPct}%`, background: 'linear-gradient(90deg, #E65C00, #FF7B2E)' }} />
               </div>
 
-              {/* Video player */}
+              {/* Video thumbnail card */}
               {activeVideo && (
-                <div className="mb-6 rounded-2xl overflow-hidden shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
-                  <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&cc_load_policy=1`}
-                      className="absolute top-0 left-0 w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen />
+                <div className="mb-6 rounded-2xl overflow-hidden shadow-sm bg-white" style={{ border: '1px solid #EBEBEB' }}>
+                  <div className="relative cursor-pointer group"
+                    style={{ paddingBottom: '56.25%', height: 0, background: '#000' }}
+                    onClick={() => window.open(`https://www.youtube.com/watch?v=${activeVideo}`, '_blank')}>
+                    <img
+                      src={`https://img.youtube.com/vi/${activeVideo}/hqdefault.jpg`}
+                      alt="Training video thumbnail"
+                      className="absolute top-0 left-0 w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform"
+                        style={{ background: 'rgba(230,92,0,0.95)' }}>
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <span className="text-xs font-medium px-3 py-1.5 rounded-full text-white"
+                        style={{ background: 'rgba(0,0,0,0.6)' }}>
+                        🎬 Click to watch on YouTube
+                      </span>
+                    </div>
                   </div>
-                  <div className="p-4 flex justify-between items-center bg-white">
-                    <p className="text-sm" style={{ color: '#666' }}>Subtitles available — click CC in the video player</p>
+                  <div className="p-4 flex justify-between items-center">
+                    <p className="text-sm" style={{ color: '#666' }}>Opens in YouTube — subtitles available via CC button</p>
                     <button onClick={() => markVideoComplete(activeVideo)}
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white"
                       style={{ background: '#16A34A' }}>
