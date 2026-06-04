@@ -29,52 +29,52 @@ const TIER_CONFIG: Record<string, { label: string; color: string; bg: string; ne
 // Training modules per department
 const TRAINING_BY_DEPT: Record<string, { title: string; videoId: string; duration: string; description: string }[]> = {
   'Health & Sanitation': [
-    { title: 'First Aid Basics', videoId: 'LegPlU-gyHs', duration: '8 min', description: 'Learn essential first aid skills for health camps and vaccination drives.' },
-    { title: 'Health Camp Organisation', videoId: 'Q0_PYBfNCsA', duration: '12 min', description: 'How to set up and manage a government health camp efficiently.' },
-    { title: 'Blood Donation Drive Guide', videoId: 'SJpj3utFNGo', duration: '6 min', description: 'Volunteer role in organising blood donation camps.' },
+    { title: 'First Aid Basics', videoId: 'dSP5NUBHklg', duration: '8 min', description: 'Learn essential first aid skills for health camps and vaccination drives.' },
+    { title: 'Health Camp Organisation', videoId: 'dSP5NUBHklg', duration: '12 min', description: 'How to set up and manage a government health camp efficiently.' },
+    { title: 'Blood Donation Drive Guide', videoId: 'dSP5NUBHklg', duration: '6 min', description: 'Volunteer role in organising blood donation camps.' },
   ],
   'Environment & Coastal': [
-    { title: 'Beach Cleanup Drive', videoId: 'zS6Ty_8xGFk', duration: '10 min', description: 'Best practices for coastal cleanup drives and waste segregation.' },
-    { title: 'Waste Segregation Training', videoId: 'bBp7QYHIQ-Q', duration: '7 min', description: 'Understanding waste categories and proper disposal methods.' },
-    { title: 'Mangrove Plantation Guide', videoId: '3OR3ZME44L4', duration: '9 min', description: 'How to plant and maintain coastal mangroves.' },
+    { title: 'Beach Cleanup Drive', videoId: '9ZtLzPQFDpg', duration: '10 min', description: 'Best practices for coastal cleanup drives and waste segregation.' },
+    { title: 'Waste Segregation Training', videoId: '9ZtLzPQFDpg', duration: '7 min', description: 'Understanding waste categories and proper disposal methods.' },
+    { title: 'Mangrove Plantation Guide', videoId: '9ZtLzPQFDpg', duration: '9 min', description: 'How to plant and maintain coastal mangroves.' },
   ],
   'Law & Order / Traffic': [
-    { title: 'Traffic Management Basics', videoId: 'KkxRCpKDDwk', duration: '11 min', description: 'Volunteer role in traffic management during civic events.' },
-    { title: 'Crowd Control Techniques', videoId: 'Y8_fGBrLt5Q', duration: '8 min', description: 'Safe and effective crowd management for public events.' },
-    { title: 'Emergency Lane Coordination', videoId: 'cWMjFZLpJi4', duration: '6 min', description: 'Keeping emergency lanes clear during festivals and events.' },
+    { title: 'Traffic Management Basics', videoId: '4OZip0cgOho', duration: '11 min', description: 'Volunteer role in traffic management during civic events.' },
+    { title: 'Crowd Control Techniques', videoId: '4OZip0cgOho', duration: '8 min', description: 'Safe and effective crowd management for public events.' },
+    { title: 'Emergency Lane Coordination', videoId: '4OZip0cgOho', duration: '6 min', description: 'Keeping emergency lanes clear during festivals and events.' },
   ],
   'Education': [
-    { title: 'Teaching Assistant Skills', videoId: 'LHY6YGLDFCM', duration: '14 min', description: 'How to support teachers in primary schools and literacy programmes.' },
-    { title: 'Digital Literacy Training', videoId: 'Iqf6j5WUiN0', duration: '10 min', description: 'Teaching basic computer skills to seniors and rural communities.' },
-    { title: 'Adult Literacy Facilitation', videoId: 'iBfASFJHsZ8', duration: '8 min', description: 'Methods for teaching reading and writing to adults.' },
+    { title: 'Teaching Assistant Skills', videoId: 'CDq6pnoBpik', duration: '14 min', description: 'How to support teachers in primary schools and literacy programmes.' },
+    { title: 'Digital Literacy Training', videoId: 'CDq6pnoBpik', duration: '10 min', description: 'Teaching basic computer skills to seniors and rural communities.' },
+    { title: 'Adult Literacy Facilitation', videoId: 'CDq6pnoBpik', duration: '8 min', description: 'Methods for teaching reading and writing to adults.' },
   ],
   'Tourism & Cultural Events': [
-    { title: 'Puducherry Heritage Guide', videoId: 'YXIfb-DxkXI', duration: '15 min', description: 'History and culture of Puducherry\'s French Quarter and heritage sites.' },
-    { title: 'Event Volunteer Management', videoId: 'Q0_PYBfNCsA', duration: '9 min', description: 'Coordinating volunteers during cultural events and festivals.' },
-    { title: 'Tourist Information Skills', videoId: 'YXIfb-DxkXI', duration: '7 min', description: 'How to assist tourists and provide accurate information.' },
+    { title: 'Puducherry Heritage Guide', videoId: '5eBT6OSr1TI', duration: '15 min', description: 'History and culture of Puducherry\'s French Quarter and heritage sites.' },
+    { title: 'Event Volunteer Management', videoId: 'dSP5NUBHklg', duration: '9 min', description: 'Coordinating volunteers during cultural events and festivals.' },
+    { title: 'Tourist Information Skills', videoId: '5eBT6OSr1TI', duration: '7 min', description: 'How to assist tourists and provide accurate information.' },
   ],
   'Disaster Management': [
-    { title: 'Disaster Preparedness Basics', videoId: 'Y8_fGBrLt5Q', duration: '13 min', description: 'NDMA guidelines for community disaster preparedness.' },
-    { title: 'Flood Relief Operations', videoId: 'cWMjFZLpJi4', duration: '10 min', description: 'Volunteer role in flood relief distribution and logistics.' },
-    { title: 'Cyclone Safety Protocol', videoId: 'KkxRCpKDDwk', duration: '8 min', description: 'Procedures for cyclone preparedness and community safety.' },
+    { title: 'Disaster Preparedness Basics', videoId: '4OZip0cgOho', duration: '13 min', description: 'NDMA guidelines for community disaster preparedness.' },
+    { title: 'Flood Relief Operations', videoId: '4OZip0cgOho', duration: '10 min', description: 'Volunteer role in flood relief distribution and logistics.' },
+    { title: 'Cyclone Safety Protocol', videoId: '4OZip0cgOho', duration: '8 min', description: 'Procedures for cyclone preparedness and community safety.' },
   ],
   'Municipal & Administration': [
-    { title: 'Voter Awareness Campaign', videoId: 'Iqf6j5WUiN0', duration: '7 min', description: 'How to conduct voter awareness drives in your commune.' },
-    { title: 'Census Data Collection', videoId: 'iBfASFJHsZ8', duration: '9 min', description: 'Accurate door-to-door data collection techniques.' },
-    { title: 'Senior Citizen Welfare', videoId: 'LegPlU-gyHs', duration: '11 min', description: 'Supporting elderly citizens through government welfare programmes.' },
+    { title: 'Voter Awareness Campaign', videoId: 'CDq6pnoBpik', duration: '7 min', description: 'How to conduct voter awareness drives in your commune.' },
+    { title: 'Census Data Collection', videoId: 'CDq6pnoBpik', duration: '9 min', description: 'Accurate door-to-door data collection techniques.' },
+    { title: 'Senior Citizen Welfare', videoId: 'dSP5NUBHklg', duration: '11 min', description: 'Supporting elderly citizens through government welfare programmes.' },
   ],
   'Women & Child Welfare': [
-    { title: 'Anganwadi Support Training', videoId: 'LHY6YGLDFCM', duration: '10 min', description: 'Assisting Anganwadi workers in child nutrition and care programmes.' },
-    { title: 'Women SHG Facilitation', videoId: 'bBp7QYHIQ-Q', duration: '12 min', description: 'How to support and facilitate women self-help groups.' },
-    { title: 'Child Safety Awareness', videoId: 'SJpj3utFNGo', duration: '8 min', description: 'Recognising and responding to child safety concerns.' },
+    { title: 'Anganwadi Support Training', videoId: 'CDq6pnoBpik', duration: '10 min', description: 'Assisting Anganwadi workers in child nutrition and care programmes.' },
+    { title: 'Women SHG Facilitation', videoId: '9ZtLzPQFDpg', duration: '12 min', description: 'How to support and facilitate women self-help groups.' },
+    { title: 'Child Safety Awareness', videoId: 'dSP5NUBHklg', duration: '8 min', description: 'Recognising and responding to child safety concerns.' },
   ],
 }
 
 const DEFAULT_MODULES = [
-  { title: 'Volunteer Orientation', videoId: 'LegPlU-gyHs', duration: '10 min', description: 'Introduction to PondySevAi and your role as a civic volunteer.' },
-  { title: 'Code of Conduct', videoId: 'Q0_PYBfNCsA', duration: '6 min', description: 'Expected behaviour, ethics, and responsibilities of a PondySevAi volunteer.' },
-  { title: 'Safety & First Aid Basics', videoId: 'LHY6YGLDFCM', duration: '8 min', description: 'Basic safety protocols and first aid awareness for all volunteers.' },
-  { title: 'Community Engagement', videoId: 'bBp7QYHIQ-Q', duration: '7 min', description: 'How to engage respectfully and effectively with the Puducherry community.' },
+  { title: 'Volunteer Orientation', videoId: 'dSP5NUBHklg', duration: '10 min', description: 'Introduction to PondySevAi and your role as a civic volunteer.' },
+  { title: 'Code of Conduct', videoId: 'dSP5NUBHklg', duration: '6 min', description: 'Expected behaviour, ethics, and responsibilities of a PondySevAi volunteer.' },
+  { title: 'Safety & First Aid Basics', videoId: 'CDq6pnoBpik', duration: '8 min', description: 'Basic safety protocols and first aid awareness for all volunteers.' },
+  { title: 'Community Engagement', videoId: '9ZtLzPQFDpg', duration: '7 min', description: 'How to engage respectfully and effectively with the Puducherry community.' },
 ]
 
 export default function DashboardPage() {
