@@ -1089,46 +1089,124 @@ export default function DashboardPage() {
               <h2 className="font-bold text-xl mb-2" style={{ color: '#1A2B4A' }}>Orientation</h2>
               <p className="text-sm mb-6" style={{ color: '#888' }}>Complete this checklist before your first deployment.</p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
-                  <h3 className="font-semibold mb-4" style={{ color: '#1A2B4A' }}>📋 Orientation Checklist</h3>
-                  {[
-                    { item: 'Complete all training modules', done: passedCount === trainingModules.length },
-                    { item: 'Receive volunteer ID card from nodal officer', done: false },
-                    { item: 'Collect safety vest / event badge', done: false },
-                    { item: 'Attend pre-deployment briefing', done: false },
-                    { item: 'Test QR code check-in', done: false },
-                    { item: 'Save emergency contact numbers', done: false },
-                  ].map((c, i) => (
-                    <div key={i} className="flex items-center gap-3 py-2.5" style={{ borderBottom: '1px solid #F9F9F7' }}>
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                        style={{ background: c.done ? '#DCFCE7' : '#F3F4F6', color: c.done ? '#16A34A' : '#ccc' }}>
-                        <span className="text-xs">✓</span>
-                      </div>
-                      <span className="text-sm" style={{ color: c.done ? '#1A2B4A' : '#888' }}>{c.item}</span>
-                    </div>
-                  ))}
-                </div>
+
+                {/* Left column */}
                 <div className="space-y-4">
+                  {/* Checklist */}
+                  <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
+                    <h3 className="font-semibold mb-4" style={{ color: '#1A2B4A' }}>📋 Orientation Checklist</h3>
+                    {[
+                      { item: 'Complete all training modules', done: passedCount === trainingModules.length },
+                      { item: 'Receive volunteer ID card from nodal officer', done: false },
+                      { item: 'Collect safety vest', done: false },
+                      { item: 'Collect event lanyard / badge', done: false },
+                      { item: 'Attend pre-deployment briefing', done: false },
+                      { item: 'Test QR code check-in below', done: false },
+                      { item: 'Save emergency contact numbers', done: false },
+                    ].map((c, i) => (
+                      <div key={i} className="flex items-center gap-3 py-2.5" style={{ borderBottom: '1px solid #F9F9F7' }}>
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                          style={{ background: c.done ? '#DCFCE7' : '#F3F4F6', color: c.done ? '#16A34A' : '#ccc' }}>
+                          <span className="text-xs">✓</span>
+                        </div>
+                        <span className="text-sm" style={{ color: c.done ? '#1A2B4A' : '#888' }}>{c.item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Issued items */}
+                  <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
+                    <h3 className="font-semibold mb-4" style={{ color: '#1A2B4A' }}>🎽 Issued Items</h3>
+                    <p className="text-xs mb-4" style={{ color: '#888' }}>Collect these from your nodal officer before first deployment</p>
+                    {[
+                      { item: 'Fluorescent safety vest', icon: '🦺', desc: 'Wear during all outdoor deployments' },
+                      { item: 'Volunteer ID card', icon: '🪪', desc: 'Carry at all times during service' },
+                      { item: 'Event lanyard / badge', icon: '🏷️', desc: 'Event-specific, issued per deployment' },
+                      { item: 'PondySevAi handbook', icon: '📖', desc: 'Code of conduct and guidelines' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 py-3" style={{ borderBottom: '1px solid #F9F9F7' }}>
+                        <span className="text-xl">{item.icon}</span>
+                        <div>
+                          <div className="text-sm font-medium" style={{ color: '#1A2B4A' }}>{item.item}</div>
+                          <div className="text-xs" style={{ color: '#aaa' }}>{item.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* QR code for check-in */}
+                  <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
+                    <h3 className="font-semibold mb-3" style={{ color: '#1A2B4A' }}>📱 Your QR Check-in Code</h3>
+                    <p className="text-xs mb-4" style={{ color: '#888' }}>Show this to your supervisor at the deployment site</p>
+                    <div className="flex flex-col items-center">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PONDYSEVAI-${profile?.id || 'VOLUNTEER'}&bgcolor=ffffff&color=1A2B4A&margin=10`}
+                        alt="QR Code"
+                        className="rounded-xl mb-3"
+                        width={180} height={180}
+                      />
+                      <div className="text-xs font-mono font-semibold px-3 py-1 rounded-full" style={{ background: '#F0F0EE', color: '#1A2B4A' }}>
+                        {profile?.id ? profile.id.slice(0, 8).toUpperCase() : 'Loading...'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right column */}
+                <div className="space-y-4">
+                  {/* Reporting location — dynamic based on upcoming deployment */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
                     <h3 className="font-semibold mb-3" style={{ color: '#1A2B4A' }}>📍 Reporting Location</h3>
-                    <div className="rounded-xl overflow-hidden mb-3">
-                      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=79.82,11.92,79.86,11.96&layer=mapnik&marker=11.9416,79.8083"
-                        width="100%" height="180" style={{ border: 0 }} />
-                    </div>
-                    <p className="text-xs" style={{ color: '#666' }}>📍 Collectorate Office, Puducherry — Report 30 mins before your shift</p>
+                    {deployments.filter(d => d.status === 'scheduled')[0] ? (() => {
+                      const upcoming = deployments.filter(d => d.status === 'scheduled')[0]
+                      const locationQuery = encodeURIComponent(upcoming.location + ', Puducherry, India')
+                      return (
+                        <>
+                          <div className="rounded-xl overflow-hidden mb-3" style={{ border: '1px solid #EBEBEB' }}>
+                            <iframe
+                              src={`https://www.openstreetmap.org/export/embed.html?bbox=79.75,11.88,79.92,11.99&layer=mapnik&query=${locationQuery}`}
+                              width="100%" height="200" style={{ border: 0 }} />
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span>📍</span>
+                            <div>
+                              <div className="text-sm font-medium" style={{ color: '#1A2B4A' }}>{upcoming.location}</div>
+                              <div className="text-xs" style={{ color: '#888' }}>Report 30 minutes before: {upcoming.shift}</div>
+                              <a href={`https://www.openstreetmap.org/search?query=${locationQuery}`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="text-xs font-medium" style={{ color: '#E65C00' }}>
+                                Open in maps →
+                              </a>
+                            </div>
+                          </div>
+                        </>
+                      )
+                    })() : (
+                      <>
+                        <div className="rounded-xl overflow-hidden mb-3" style={{ border: '1px solid #EBEBEB' }}>
+                          <iframe
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=79.82,11.92,79.86,11.96&layer=mapnik&marker=11.9416,79.8083"
+                            width="100%" height="200" style={{ border: 0 }} />
+                        </div>
+                        <p className="text-xs" style={{ color: '#666' }}>📍 Default: Collectorate Office, Puducherry. Your specific location will appear once a deployment is assigned.</p>
+                      </>
+                    )}
                   </div>
+
+                  {/* Emergency contacts */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
                     <h3 className="font-semibold mb-3" style={{ color: '#1A2B4A' }}>🚨 Emergency Contacts</h3>
                     {[
                       { role: 'Ambulance', number: '108' },
                       { role: 'Police', number: '100' },
-                      { role: 'Volunteer Helpdesk', number: '1800-425-1234' },
-                      { role: 'Childline', number: '1098' },
+                      { role: 'Fire', number: '101' },
                       { role: 'Disaster Helpline', number: '1078' },
+                      { role: 'Childline', number: '1098' },
+                      { role: 'Volunteer Helpdesk', number: '1800-425-1234' },
                     ].map(c => (
                       <div key={c.role} className="flex justify-between items-center py-2 text-sm" style={{ borderBottom: '1px solid #F9F9F7' }}>
                         <span style={{ color: '#666' }}>{c.role}</span>
-                        <a href={`tel:${c.number}`} className="font-semibold" style={{ color: '#E65C00' }}>{c.number}</a>
+                        <a href={`tel:${c.number}`} className="font-semibold" style={{ color: '#E65C00', textDecoration: 'none' }}>{c.number}</a>
                       </div>
                     ))}
                   </div>
@@ -1140,40 +1218,105 @@ export default function DashboardPage() {
           {/* ── DEPLOYMENT TAB ── */}
           {activeTab === 'deployment' && (
             <div>
-              <h2 className="font-bold text-xl mb-6" style={{ color: '#1A2B4A' }}>My Deployments</h2>
+              <h2 className="font-bold text-xl mb-2" style={{ color: '#1A2B4A' }}>My Deployments</h2>
+              <p className="text-sm mb-6" style={{ color: '#888' }}>
+                Total hours: <strong>{deployments.filter(d => d.status === 'completed').length * 8} hrs</strong> · 
+                Completed: <strong>{deployments.filter(d => d.status === 'completed').length}</strong> · 
+                Upcoming: <strong>{deployments.filter(d => d.status === 'scheduled').length}</strong>
+              </p>
+
               {deployments.length === 0 ? (
                 <div className="bg-white rounded-2xl p-8 text-center shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
                   <div className="text-4xl mb-3">📅</div>
-                  <p className="text-sm" style={{ color: '#aaa' }}>No deployments yet. Once assigned, your shifts will appear here.</p>
+                  <p className="text-sm" style={{ color: '#aaa' }}>No deployments yet. Once a nodal officer assigns you a shift, it will appear here.</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {deployments.map(d => (
-                    <div key={d.id} className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="font-semibold" style={{ color: '#1A2B4A' }}>{d.roles?.name || 'Volunteer Role'}</h3>
-                          <p className="text-xs mt-0.5" style={{ color: '#888' }}>{d.roles?.dept_name}</p>
-                          <div className="flex gap-4 mt-3 text-xs" style={{ color: '#666' }}>
-                            <span>📅 {d.scheduled_date}</span>
-                            <span>⏰ {d.shift}</span>
-                            <span>📍 {d.location}</span>
+                    <div key={d.id} className="bg-white rounded-2xl shadow-sm overflow-hidden"
+                      style={{ border: `2px solid ${d.status === 'active' ? '#E65C00' : '#EBEBEB'}` }}>
+
+                      {/* Deployment header */}
+                      <div className="p-5">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="font-semibold text-lg" style={{ color: '#1A2B4A' }}>{d.roles?.name || 'Volunteer Role'}</h3>
+                            <p className="text-sm" style={{ color: '#888' }}>{d.roles?.dept_name}</p>
+                          </div>
+                          <span className="text-xs font-semibold px-3 py-1.5 rounded-full"
+                            style={{
+                              background: d.status === 'completed' ? '#F0FDF4' : d.status === 'active' ? '#FEF3C7' : '#EEF2FF',
+                              color: d.status === 'completed' ? '#16A34A' : d.status === 'active' ? '#D97706' : '#4338CA'
+                            }}>
+                            {d.status === 'completed' ? '✅ Completed' : d.status === 'active' ? '🟡 Active' : '🔵 Scheduled'}
+                          </span>
+                        </div>
+
+                        {/* Shift info grid */}
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="rounded-xl p-3" style={{ background: '#F9F9F7' }}>
+                            <div className="text-xs mb-0.5" style={{ color: '#aaa' }}>Date</div>
+                            <div className="text-sm font-semibold" style={{ color: '#1A2B4A' }}>📅 {d.scheduled_date}</div>
+                          </div>
+                          <div className="rounded-xl p-3" style={{ background: '#F9F9F7' }}>
+                            <div className="text-xs mb-0.5" style={{ color: '#aaa' }}>Shift</div>
+                            <div className="text-sm font-semibold" style={{ color: '#1A2B4A' }}>⏰ {d.shift}</div>
+                          </div>
+                          <div className="rounded-xl p-3" style={{ background: '#F9F9F7' }}>
+                            <div className="text-xs mb-0.5" style={{ color: '#aaa' }}>Location</div>
+                            <div className="text-sm font-semibold" style={{ color: '#1A2B4A' }}>📍 {d.location}</div>
+                          </div>
+                          <div className="rounded-xl p-3" style={{ background: '#F9F9F7' }}>
+                            <div className="text-xs mb-0.5" style={{ color: '#aaa' }}>Hours</div>
+                            <div className="text-sm font-semibold" style={{ color: '#1A2B4A' }}>⏱ {d.status === 'completed' ? '8 hrs' : 'Pending'}</div>
                           </div>
                         </div>
-                        <span className="text-xs font-medium px-2.5 py-1 rounded-full"
-                          style={{
-                            background: d.status === 'completed' ? '#F0FDF4' : d.status === 'active' ? '#FEF3C7' : '#EEF2FF',
-                            color: d.status === 'completed' ? '#16A34A' : d.status === 'active' ? '#D97706' : '#4338CA'
-                          }}>
-                          {d.status}
-                        </span>
+
+                        {/* OpenStreetMap for this deployment location */}
+                        <div className="rounded-xl overflow-hidden mb-4" style={{ border: '1px solid #EBEBEB' }}>
+                          <iframe
+                            src={`https://www.openstreetmap.org/export/embed.html?bbox=79.75,11.88,79.92,11.99&layer=mapnik&query=${encodeURIComponent(d.location + ', Puducherry')}`}
+                            width="100%" height="160" style={{ border: 0 }} />
+                        </div>
+                        <a href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(d.location + ', Puducherry, India')}`}
+                          target="_blank" rel="noopener noreferrer"
+                          className="text-xs font-medium" style={{ color: '#E65C00', textDecoration: 'none' }}>
+                          📍 Open location in maps →
+                        </a>
+
+                        {/* Supervisor contact placeholder */}
+                        <div className="mt-4 rounded-xl p-3 flex items-center gap-3" style={{ background: '#EEF2FA', border: '1px solid rgba(26,86,219,0.15)' }}>
+                          <span className="text-xl">👤</span>
+                          <div>
+                            <div className="text-xs font-semibold" style={{ color: '#1A56DB' }}>Supervisor Contact</div>
+                            <div className="text-sm" style={{ color: '#1A2B4A' }}>Contact your assigned nodal officer for supervisor details</div>
+                          </div>
+                        </div>
+
+                        {/* QR check-in/out buttons */}
+                        {(d.status === 'scheduled' || d.status === 'active') && (
+                          <div className="mt-4 flex gap-3">
+                            <button
+                              onClick={() => {
+                                window.open(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=CHECKIN-${d.id}-${profile?.id}&bgcolor=ffffff&color=1A2B4A`, '_blank')
+                              }}
+                              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white"
+                              style={{ background: '#E65C00' }}>
+                              <QrCode size={16} /> QR Check-in
+                            </button>
+                            {d.status === 'active' && (
+                              <button
+                                onClick={() => {
+                                  window.open(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=CHECKOUT-${d.id}-${profile?.id}&bgcolor=ffffff&color=DC2626`, '_blank')
+                                }}
+                                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white"
+                                style={{ background: '#DC2626' }}>
+                                <QrCode size={16} /> QR Check-out
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
-                      {d.status === 'scheduled' && (
-                        <button className="mt-4 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white"
-                          style={{ background: '#E65C00' }}>
-                          <QrCode size={15} /> QR Check-in
-                        </button>
-                      )}
                     </div>
                   ))}
                 </div>
