@@ -1,7 +1,6 @@
 /**
- * PondySevAi API client
- * Connects the Next.js frontend to the FastAPI backend.
- * Set NEXT_PUBLIC_API_URL in your .env.local to your Railway backend URL.
+ * PondySevAi API client — Phase 2 + Phase 3 features
+ * Set NEXT_PUBLIC_API_URL in .env.local to your Railway backend URL.
  */
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
@@ -29,24 +28,21 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return res.json()
 }
 
-// ─── Auth ───────────────────────────────────
 export const api = {
+  // ─── Auth ───────────────────────────────────
   auth: {
     sendOtp: (phone: string) =>
       request<{ sent: boolean; dev_otp?: string }>('/auth/otp/send', {
         method: 'POST', body: JSON.stringify({ phone }),
       }),
-
     verifyOtp: (phone: string, otp: string) =>
       request<{ access_token: string; role: string; name: string }>('/auth/otp/verify', {
         method: 'POST', body: JSON.stringify({ phone, otp }),
       }),
-
     staffLogin: (email: string, password: string) =>
       request<{ access_token: string; role: string; name: string }>('/auth/staff/login', {
         method: 'POST', body: JSON.stringify({ email, password }),
       }),
-
     adminLogin: (email: string, password: string) =>
       request<{ access_token: string; role: string; name: string }>('/auth/admin/login', {
         method: 'POST', body: JSON.stringify({ email, password }),
@@ -59,19 +55,15 @@ export const api = {
       request<{ id: string; reference_number: string; status: string }>('/volunteers/register', {
         method: 'POST', body: JSON.stringify(data),
       }),
-
     me: () => request<Record<string, unknown>>('/volunteers/me'),
-
     list: (params?: { status?: string; commune?: string }) => {
       const qs = new URLSearchParams(params as Record<string, string>).toString()
       return request<{ volunteers: unknown[]; total: number }>(`/volunteers/${qs ? `?${qs}` : ''}`)
     },
-
     update: (id: string, data: Record<string, unknown>) =>
       request<{ updated: boolean }>(`/volunteers/${id}`, {
         method: 'PATCH', body: JSON.stringify(data),
       }),
-
     reassess: (id: string) =>
       request<{ message: string }>(`/volunteers/${id}/reassess`, { method: 'POST' }),
   },
@@ -91,6 +83,11 @@ export const api = {
     checkin: (volunteer_id: string, deployment_id: string, action: 'checkin' | 'checkout') =>
       request<{ action: string; timestamp: string }>('/deployments/checkin', {
         method: 'POST', body: JSON.stringify({ volunteer_id, deployment_id, action }),
+      }),
+    // Phase 3: Feedback submission
+    feedback: (volunteer_id: string, category: string, notes?: string, deployment_id?: string) =>
+      request<{ feedback: string }>('/deployments/feedback', {
+        method: 'POST', body: JSON.stringify({ volunteer_id, deployment_id, category, notes }),
       }),
   },
 
@@ -119,6 +116,18 @@ export const api = {
       const qs = new URLSearchParams(params as Record<string, string>).toString()
       return `${BASE_URL}/nodal-officer/export/csv${qs ? `?${qs}` : ''}`
     },
+  },
+
+  // ─── Admin (Phase 2) ────────────────────────
+  admin: {
+    createStaff: (data: { name: string; email: string; password: string; commune: string; role: string }) =>
+      request<{ created: boolean; id: string }>('/admin/staff', {
+        method: 'POST', body: JSON.stringify(data),
+      }),
+    listStaff: () =>
+      request<{ staff: unknown[] }>('/admin/staff'),
+    deleteStaff: (id: string) =>
+      request<{ deleted: boolean }>(`/admin/staff/${id}`, { method: 'DELETE' }),
   },
 }
 
