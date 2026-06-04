@@ -649,7 +649,7 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'training' | 'orientation' | 'deployment'>('overview')
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
   const [completedModules, setCompletedModules] = useState<number[]>([])
-  const [quizState, setQuizState] = useState<Record<number, 'pass' | 'fail'>>({})
+  const [quizState, setQuizState] = useState<Record<string, 'pass' | 'fail'>>({})
   const [activeQuiz, setActiveQuiz] = useState<number | null>(null)
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({})
   const [quizSubmitted, setQuizSubmitted] = useState(false)
