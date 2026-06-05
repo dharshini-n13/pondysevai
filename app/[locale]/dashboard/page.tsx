@@ -653,6 +653,11 @@ export default function DashboardPage() {
   const [activeQuiz, setActiveQuiz] = useState<number | null>(null)
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({})
   const [quizSubmitted, setQuizSubmitted] = useState(false)
+  const [checkedItems, setCheckedItems] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return []
+    const saved = localStorage.getItem('psevai_checklist')
+    return saved ? JSON.parse(saved) : []
+  })
 
   useEffect(() => {
     setSession(getSession())
@@ -662,6 +667,12 @@ export default function DashboardPage() {
     const savedQuiz = localStorage.getItem('psevai_quiz_state')
     if (savedQuiz) setQuizState(JSON.parse(savedQuiz))
   }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('psevai_checklist', JSON.stringify(checkedItems))
+    }
+  }, [checkedItems])
 
   const loadData = async () => {
     setLoading(true)
@@ -1094,24 +1105,40 @@ export default function DashboardPage() {
                 <div className="space-y-4">
                   {/* Checklist */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
-                    <h3 className="font-semibold mb-4" style={{ color: '#1A2B4A' }}>📋 Orientation Checklist</h3>
+                    <h3 className="font-semibold mb-1" style={{ color: '#1A2B4A' }}>📋 Orientation Checklist</h3>
+                    <p className="text-xs mb-4" style={{ color: '#aaa' }}>Tap each item to mark as done</p>
                     {[
-                      { item: 'Complete all training modules', done: passedCount === trainingModules.length },
-                      { item: 'Receive volunteer ID card from nodal officer', done: false },
-                      { item: 'Collect safety vest', done: false },
-                      { item: 'Collect event lanyard / badge', done: false },
-                      { item: 'Attend pre-deployment briefing', done: false },
-                      { item: 'Test QR code check-in below', done: false },
-                      { item: 'Save emergency contact numbers', done: false },
-                    ].map((c, i) => (
-                      <div key={i} className="flex items-center gap-3 py-2.5" style={{ borderBottom: '1px solid #F9F9F7' }}>
-                        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                          style={{ background: c.done ? '#DCFCE7' : '#F3F4F6', color: c.done ? '#16A34A' : '#ccc' }}>
-                          <span className="text-xs">✓</span>
-                        </div>
-                        <span className="text-sm" style={{ color: c.done ? '#1A2B4A' : '#888' }}>{c.item}</span>
-                      </div>
-                    ))}
+                      { item: 'Complete all training modules', auto: passedCount === trainingModules.length, key: 'training' },
+                      { item: 'Receive volunteer ID card from nodal officer', auto: false, key: 'idcard' },
+                      { item: 'Collect safety vest', auto: false, key: 'vest' },
+                      { item: 'Collect event lanyard / badge', auto: false, key: 'lanyard' },
+                      { item: 'Attend pre-deployment briefing', auto: false, key: 'briefing' },
+                      { item: 'Test QR code check-in below', auto: false, key: 'qrtest' },
+                      { item: 'Save emergency contact numbers', auto: false, key: 'contacts' },
+                    ].map((c) => {
+                      const isDone = c.auto || checkedItems.includes(c.key)
+                      return (
+                        <button key={c.key}
+                          onClick={() => {
+                            if (c.auto) return
+                            setCheckedItems(prev =>
+                              prev.includes(c.key) ? prev.filter(k => k !== c.key) : [...prev, c.key]
+                            )
+                          }}
+                          className="w-full flex items-center gap-3 py-2.5 text-left"
+                          style={{ borderBottom: '1px solid #F9F9F7' }}>
+                          <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
+                            style={{ background: isDone ? '#DCFCE7' : 'white', border: `2px solid ${isDone ? '#16A34A' : '#E2E2DC'}`, color: isDone ? '#16A34A' : '#ccc' }}>
+                            {isDone && <span className="text-xs font-bold">✓</span>}
+                          </div>
+                          <span className="text-sm" style={{ color: isDone ? '#1A2B4A' : '#888', textDecoration: isDone ? 'none' : 'none' }}>{c.item}</span>
+                          {c.auto && <span className="ml-auto text-xs" style={{ color: '#16A34A' }}>Auto</span>}
+                        </button>
+                      )
+                    })}
+                    <div className="mt-3 text-xs" style={{ color: '#aaa' }}>
+                      {checkedItems.length + (passedCount === trainingModules.length ? 1 : 0)}/7 completed
+                    </div>
                   </div>
 
                   {/* Issued items */}
