@@ -653,11 +653,7 @@ export default function DashboardPage() {
   const [activeQuiz, setActiveQuiz] = useState<number | null>(null)
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({})
   const [quizSubmitted, setQuizSubmitted] = useState(false)
-  const [checkedItems, setCheckedItems] = useState<string[]>(() => {
-    if (typeof window === 'undefined') return []
-    const saved = localStorage.getItem('psevai_checklist')
-    return saved ? JSON.parse(saved) : []
-  })
+  const [checkedItems, setCheckedItems] = useState<string[]>([])
 
   useEffect(() => {
     setSession(getSession())
