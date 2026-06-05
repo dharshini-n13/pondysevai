@@ -46,6 +46,9 @@ export default function NodalOfficerPage() {
   const [showFeedbackModal, setShowFeedbackModal] = useState<Applicant | null>(null)
   const [roleInput, setRoleInput] = useState('')
   const [deptInput, setDeptInput] = useState('')
+  const [locationInput, setLocationInput] = useState('')
+  const [dateInput, setDateInput] = useState('')
+  const [shiftInput, setShiftInput] = useState('')
   const [feedbackCategory, setFeedbackCategory] = useState('regular')
   const [feedbackNotes, setFeedbackNotes] = useState('')
   const [toast, setToast] = useState('')
@@ -94,12 +97,20 @@ export default function NodalOfficerPage() {
   const handleAssign = async () => {
     if (!showAssignModal) return
     try {
-      await api.nodalOfficer.assign(showAssignModal.id, roleInput || showAssignModal.assigned_role || 'Volunteer', deptInput || showAssignModal.assigned_dept || 'General')
+      await api.nodalOfficer.assign(
+        showAssignModal.id,
+        roleInput || showAssignModal.assigned_role || 'Volunteer',
+        deptInput || showAssignModal.assigned_dept || 'General',
+        locationInput,
+        dateInput,
+        shiftInput,
+      )
       setApplicants(prev => prev.map(a => a.id === showAssignModal.id
         ? { ...a, status: 'assigned', assigned_role: roleInput, assigned_dept: deptInput } : a))
-      showToast('Volunteer assigned successfully')
+      showToast('Volunteer assigned successfully!')
     } catch (err) { if (err instanceof ApiError) showToast(err.message) }
-    setShowAssignModal(null); setRoleInput(''); setDeptInput('')
+    setShowAssignModal(null)
+    setRoleInput(''); setDeptInput(''); setLocationInput(''); setDateInput(''); setShiftInput('')
   }
 
   const handleReject = async () => {
@@ -390,7 +401,7 @@ export default function NodalOfficerPage() {
                 placeholder="Enter role name"
                 value={roleInput} onChange={e => setRoleInput(e.target.value)} />
             </div>
-            <div className="mb-5">
+            <div className="mb-3">
               <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Department</label>
               <select className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                 style={{ border: '1px solid #E2E2DC', color: deptInput ? '#1A2B4A' : '#aaa' }}
@@ -398,6 +409,34 @@ export default function NodalOfficerPage() {
                 <option value="">Select department</option>
                 {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
+            </div>
+            <div className="mb-3">
+              <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Deployment Location</label>
+              <input className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ border: '1px solid #E2E2DC', color: '#1A2B4A' }}
+                placeholder="e.g. Beach Road, Puducherry"
+                value={locationInput} onChange={e => setLocationInput(e.target.value)} />
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-5">
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Date</label>
+                <input type="date" className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                  style={{ border: '1px solid #E2E2DC', color: '#1A2B4A' }}
+                  value={dateInput} onChange={e => setDateInput(e.target.value)} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Shift</label>
+                <select className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                  style={{ border: '1px solid #E2E2DC', color: shiftInput ? '#1A2B4A' : '#aaa' }}
+                  value={shiftInput} onChange={e => setShiftInput(e.target.value)}>
+                  <option value="">Select shift</option>
+                  <option value="06:00 AM - 10:00 AM">Morning (6–10 AM)</option>
+                  <option value="10:00 AM - 02:00 PM">Late Morning (10 AM–2 PM)</option>
+                  <option value="02:00 PM - 06:00 PM">Afternoon (2–6 PM)</option>
+                  <option value="06:00 PM - 10:00 PM">Evening (6–10 PM)</option>
+                  <option value="Full Day 08:00 AM - 06:00 PM">Full Day (8 AM–6 PM)</option>
+                </select>
+              </div>
             </div>
             <div className="flex gap-3">
               <button onClick={() => setShowAssignModal(null)} className="flex-1 py-3 rounded-xl text-sm font-medium"

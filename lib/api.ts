@@ -105,9 +105,10 @@ export const api = {
       const qs = new URLSearchParams(params as Record<string, string>).toString()
       return request<{ applicants: unknown[] }>(`/nodal-officer/applicants${qs ? `?${qs}` : ''}`)
     },
-    assign: (id: string, role: string, dept: string) =>
-      request<{ assigned: boolean }>(`/nodal-officer/assign/${id}?role=${encodeURIComponent(role)}&dept=${encodeURIComponent(dept)}`, {
+    assign: (id: string, role: string, dept: string, location?: string, scheduled_date?: string, shift?: string) =>
+      request<{ assigned: boolean; deployment_id?: string }>(`/nodal-officer/assign/${id}`, {
         method: 'POST',
+        body: JSON.stringify({ role, dept, location, scheduled_date, shift }),
       }),
     reject: (id: string) =>
       request<{ rejected: boolean }>(`/nodal-officer/reject/${id}`, { method: 'POST' }),
