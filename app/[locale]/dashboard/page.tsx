@@ -876,11 +876,27 @@ export default function DashboardPage() {
                   {profile?.tier && (
                     <div className="bg-white rounded-2xl p-5 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
                       <h3 className="font-semibold text-sm mb-3" style={{ color: '#1A2B4A' }}>Certificate</h3>
-                      <a href={profile?.id ? api.certificates.downloadUrl(profile.id) : '#'}
+                    <button
+                        onClick={async () => {
+                          try {
+                            const token = localStorage.getItem('psevai_token')
+                            const res = await fetch(api.certificates.downloadUrl(profile!.id), {
+                              headers: { Authorization: `Bearer ${token}` }
+                            })
+                            if (!res.ok) throw new Error('Failed')
+                            const blob = await res.blob()
+                            const url = URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.href = url
+                            a.download = `PondySevAi_Certificate.pdf`
+                            a.click()
+                            URL.revokeObjectURL(url)
+                          } catch { alert('Certificate download failed. Please try again.') }
+                        }}
                         className="flex items-center gap-2 w-full py-3 px-4 rounded-xl text-sm font-medium text-white"
-                        style={{ background: '#1A2B4A', textDecoration: 'none' }}>
+                        style={{ background: '#1A2B4A' }}>
                         <Download size={15} /> Download Certificate
-                      </a>
+                    </button>
                     </div>
                   )}
 
