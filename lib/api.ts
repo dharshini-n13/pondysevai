@@ -1,6 +1,5 @@
 /**
- * PondySevAi API client — Phase 2 + Phase 3 features
- * Set NEXT_PUBLIC_API_URL in .env.local to your Railway backend URL.
+ * PondySevAi API client — Final Complete
  */
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
@@ -29,7 +28,6 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 export const api = {
-  // ─── Auth ───────────────────────────────────
   auth: {
     sendOtp: (phone: string) =>
       request<{ sent: boolean; dev_otp?: string }>('/auth/otp/send', {
@@ -49,7 +47,6 @@ export const api = {
       }),
   },
 
-  // ─── Volunteers ─────────────────────────────
   volunteers: {
     register: (data: Record<string, unknown>) =>
       request<{ id: string; reference_number: string; status: string }>('/volunteers/register', {
@@ -68,7 +65,6 @@ export const api = {
       request<{ message: string }>(`/volunteers/${id}/reassess`, { method: 'POST' }),
   },
 
-  // ─── Roles ──────────────────────────────────
   roles: {
     list: (params?: { dept_id?: string; demand?: string }) => {
       const qs = new URLSearchParams(params as Record<string, string>).toString()
@@ -77,21 +73,18 @@ export const api = {
     departments: () => request<{ departments: unknown[] }>('/roles/departments'),
   },
 
-  // ─── Deployments ────────────────────────────
   deployments: {
     my: () => request<{ deployments: unknown[] }>('/deployments/my'),
     checkin: (volunteer_id: string, deployment_id: string, action: 'checkin' | 'checkout') =>
       request<{ action: string; timestamp: string }>('/deployments/checkin', {
         method: 'POST', body: JSON.stringify({ volunteer_id, deployment_id, action }),
       }),
-    // Phase 3: Feedback submission
     feedback: (volunteer_id: string, category: string, notes?: string, deployment_id?: string) =>
       request<{ feedback: string }>('/deployments/feedback', {
         method: 'POST', body: JSON.stringify({ volunteer_id, deployment_id, category, notes }),
       }),
   },
 
-  // ─── Certificates ───────────────────────────
   certificates: {
     my: () => request<{ certificates: unknown[] }>('/certificates/my'),
     verify: (cert_id: string) =>
@@ -99,7 +92,13 @@ export const api = {
     downloadUrl: (volunteer_id: string) => `${BASE_URL}/certificates/download/${volunteer_id}`,
   },
 
-  // ─── Nodal Officer ──────────────────────────
+  rewards: {
+    leaderboard: (commune?: string) => {
+      const qs = commune ? `?commune=${encodeURIComponent(commune)}` : ''
+      return request<{ leaderboard: unknown[] }>(`/rewards/leaderboard${qs}`)
+    },
+  },
+
   nodalOfficer: {
     applicants: (params?: { status?: string; commune?: string }) => {
       const qs = new URLSearchParams(params as Record<string, string>).toString()
@@ -119,14 +118,12 @@ export const api = {
     },
   },
 
-  // ─── Admin (Phase 2) ────────────────────────
   admin: {
     createStaff: (data: { name: string; email: string; password: string; commune: string; role: string }) =>
       request<{ created: boolean; id: string }>('/admin/staff', {
         method: 'POST', body: JSON.stringify(data),
       }),
-    listStaff: () =>
-      request<{ staff: unknown[] }>('/admin/staff'),
+    listStaff: () => request<{ staff: unknown[] }>('/admin/staff'),
     deleteStaff: (id: string) =>
       request<{ deleted: boolean }>(`/admin/staff/${id}`, { method: 'DELETE' }),
   },

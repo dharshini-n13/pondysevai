@@ -46,6 +46,9 @@ export default function NodalOfficerPage() {
   const [showFeedbackModal, setShowFeedbackModal] = useState<Applicant | null>(null)
   const [roleInput, setRoleInput] = useState('')
   const [deptInput, setDeptInput] = useState('')
+  const [locationInput, setLocationInput] = useState('')
+  const [dateInput, setDateInput] = useState('')
+  const [shiftInput, setShiftInput] = useState('')
   const [feedbackCategory, setFeedbackCategory] = useState('regular')
   const [feedbackNotes, setFeedbackNotes] = useState('')
   const [toast, setToast] = useState('')
@@ -62,7 +65,6 @@ export default function NodalOfficerPage() {
     try {
       const result = await api.nodalOfficer.applicants() as { applicants: Applicant[] }
       setApplicants(result.applicants)
-      // Build stats
       const s: Record<string, number> = { All: result.applicants.length }
       result.applicants.forEach(a => {
         const k = a.status === 'registered' ? 'pending_review' : a.status
@@ -71,12 +73,8 @@ export default function NodalOfficerPage() {
       setStats(s)
     } catch (err) {
       if (err instanceof ApiError) {
-        setError(err.status === 401 || err.status === 403
-          ? 'Session expired. Please log in again.'
-          : err.message)
-      } else {
-        setError('Failed to load applicants.')
-      }
+        setError(err.status === 401 || err.status === 403 ? 'Session expired. Please log in again.' : err.message)
+      } else setError('Failed to load applicants.')
     } finally { setLoading(false) }
   }
 
@@ -93,13 +91,23 @@ export default function NodalOfficerPage() {
 
   const handleAssign = async () => {
     if (!showAssignModal) return
+    if (!roleInput.trim()) { showToast('Please enter a role name'); return }
+    if (!deptInput) { showToast('Please select a department'); return }
     try {
-      await api.nodalOfficer.assign(showAssignModal.id, roleInput || showAssignModal.assigned_role || 'Volunteer', deptInput || showAssignModal.assigned_dept || 'General')
+      await api.nodalOfficer.assign(
+        showAssignModal.id,
+        roleInput,
+        deptInput,
+        locationInput || undefined,
+        dateInput || undefined,
+        shiftInput || undefined,
+      )
       setApplicants(prev => prev.map(a => a.id === showAssignModal.id
         ? { ...a, status: 'assigned', assigned_role: roleInput, assigned_dept: deptInput } : a))
-      showToast('Volunteer assigned successfully')
+      showToast(`✅ ${showAssignModal.full_name} assigned as ${roleInput}`)
     } catch (err) { if (err instanceof ApiError) showToast(err.message) }
-    setShowAssignModal(null); setRoleInput(''); setDeptInput('')
+    setShowAssignModal(null)
+    setRoleInput(''); setDeptInput(''); setLocationInput(''); setDateInput(''); setShiftInput('')
   }
 
   const handleReject = async () => {
@@ -167,7 +175,6 @@ export default function NodalOfficerPage() {
       <main className="min-h-screen pt-[72px]" style={{ background: '#F9F9F7' }}>
         <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
 
-          {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
               <div className="text-xs mb-1" style={{ color: '#888' }}>{t('portal_label')} · {session.name}</div>
@@ -191,32 +198,23 @@ export default function NodalOfficerPage() {
             </div>
           </div>
 
-          {/* Error */}
           {error && (
             <div className="mb-4 px-4 py-3 rounded-xl text-sm" style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626' }}>
               {error}
-              {error.includes('expired') && (
-                <a href={`/${locale}/login/nodal-officer`} className="underline ml-2 font-medium">Login again</a>
-              )}
+              {error.includes('expired') && <a href={`/${locale}/login/nodal-officer`} className="underline ml-2 font-medium">Login again</a>}
             </div>
           )}
 
-          {/* Status tabs */}
           <div className="flex gap-2 mb-6 flex-wrap">
             {(['All', 'pending_review', 'review', 'assigned', 'rejected'] as const).map(s => (
               <button key={s} onClick={() => setFilterStatus(s)}
                 className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
-                style={{
-                  background: filterStatus === s ? '#1A2B4A' : 'white',
-                  color: filterStatus === s ? 'white' : '#666',
-                  border: '1px solid ' + (filterStatus === s ? '#1A2B4A' : '#E2E2DC')
-                }}>
+                style={{ background: filterStatus === s ? '#1A2B4A' : 'white', color: filterStatus === s ? 'white' : '#666', border: '1px solid ' + (filterStatus === s ? '#1A2B4A' : '#E2E2DC') }}>
                 {statusLabels[s]} <span className="ml-1 text-xs opacity-70">{stats[s] ?? 0}</span>
               </button>
             ))}
           </div>
 
-          {/* Filters */}
           <div className="bg-white rounded-2xl p-4 mb-4 flex flex-wrap gap-3 shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
             <div className="flex-1 min-w-48 relative">
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#aaa' }} />
@@ -233,7 +231,6 @@ export default function NodalOfficerPage() {
             </select>
           </div>
 
-          {/* Table */}
           <div className="bg-white rounded-2xl overflow-hidden shadow-sm" style={{ border: '1px solid #EBEBEB' }}>
             {loading ? (
               <div className="py-16 text-center" style={{ color: '#aaa' }}>Loading volunteers...</div>
@@ -245,7 +242,7 @@ export default function NodalOfficerPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ borderBottom: '1px solid #F0F0EE', background: '#FAFAF9' }}>
-                    {[t('col_applicant'), t('col_commune'), t('col_dept'), t('col_score'), t('col_role'), t('col_status'), t('col_actions')].map(h => (
+                    {[t('col_applicant'), t('col_commune'), 'Assigned Dept', t('col_score'), 'Assigned Role', t('col_status'), t('col_actions')].map(h => (
                       <th key={h} className="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-wider" style={{ color: '#aaa' }}>{h}</th>
                     ))}
                   </tr>
@@ -263,19 +260,17 @@ export default function NodalOfficerPage() {
                             <div className="text-xs" style={{ color: '#aaa' }}>+91 {a.phone}</div>
                             {tier && (
                               <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full mt-1"
-                                style={{ background: tier.bg, color: tier.color }}>
-                                🏅 {tier.label}
-                              </span>
-                            )}
-                            {a.latest_feedback && (
-                              <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full mt-1 ml-1"
-                                style={{ background: '#FEF3C7', color: '#D97706' }}>
-                                ⭐ {a.latest_feedback.replace('_', ' ')}
-                              </span>
+                                style={{ background: tier.bg, color: tier.color }}>🏅 {tier.label}</span>
                             )}
                           </td>
                           <td className="px-5 py-4" style={{ color: '#666' }}>{a.commune}</td>
-                          <td className="px-5 py-4" style={{ color: '#666' }}>{a.assigned_dept || (a.departments?.[0]) || '—'}</td>
+                          <td className="px-5 py-4">
+                            {a.assigned_dept ? (
+                              <span className="text-xs font-medium" style={{ color: '#1A2B4A' }}>{a.assigned_dept}</span>
+                            ) : (
+                              <span className="text-xs" style={{ color: '#ccc' }}>—</span>
+                            )}
+                          </td>
                           <td className="px-5 py-4">
                             {a.ai_score != null && a.ai_score > 0 ? (
                               <div className="flex items-center gap-2">
@@ -292,17 +287,19 @@ export default function NodalOfficerPage() {
                               </button>
                             )}
                           </td>
-                          <td className="px-5 py-4 max-w-[140px]">
-                            <div>
-                              {a.assigned_role ? (
+                          <td className="px-5 py-4">
+                            {a.assigned_role ? (
+                              <div>
                                 <span className="text-xs font-semibold" style={{ color: '#1A2B4A' }}>{a.assigned_role}</span>
-                              ) : (
+                              </div>
+                            ) : (
+                              <div>
                                 <span className="text-xs" style={{ color: '#ccc' }}>Not assigned</span>
-                              )}
-                              {topMatches[0]?.role_name && !a.assigned_role && (
-                                <div className="text-xs mt-0.5" style={{ color: '#aaa' }}>AI: {topMatches[0].role_name}</div>
-                              )}
-                            </div>
+                                {topMatches[0]?.role_name && (
+                                  <div className="text-xs mt-0.5" style={{ color: '#bbb' }}>AI: {topMatches[0].role_name}</div>
+                                )}
+                              </div>
+                            )}
                           </td>
                           <td className="px-5 py-4">
                             <span className="inline-block text-xs font-medium px-2.5 py-1 rounded-full"
@@ -321,7 +318,7 @@ export default function NodalOfficerPage() {
                               )}
                               {(a.status === 'pending_review' || a.status === 'registered' || a.status === 'review') && (
                                 <div className="flex gap-1.5 flex-wrap">
-                                  <button onClick={() => { setShowAssignModal(a); setRoleInput(a.assigned_role || ''); setDeptInput(a.assigned_dept || '') }}
+                                  <button onClick={() => { setShowAssignModal(a); setRoleInput(''); setDeptInput(''); setLocationInput(''); setDateInput(''); setShiftInput('') }}
                                     className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg text-white"
                                     style={{ background: '#16A34A' }}>
                                     <Check size={11} /> {t('btn_assign')}
@@ -340,18 +337,15 @@ export default function NodalOfficerPage() {
                                   <Star size={11} /> Feedback
                                 </button>
                               )}
-                              {a.ai_score != null && a.ai_score > 0 && (
-                                <button onClick={() => handleReassess(a.id)} disabled={reassessing === a.id}
-                                  className="text-xs flex items-center gap-1" style={{ color: '#888' }}>
-                                  <RefreshCw size={10} className={reassessing === a.id ? 'animate-spin' : ''} />
-                                  Re-assess
-                                </button>
-                              )}
+                              <button onClick={() => handleReassess(a.id)} disabled={reassessing === a.id}
+                                className="text-xs flex items-center gap-1" style={{ color: '#888' }}>
+                                <RefreshCw size={10} className={reassessing === a.id ? 'animate-spin' : ''} />
+                                Re-assess
+                              </button>
                             </div>
                           </td>
                         </tr>
 
-                        {/* AI expanded row */}
                         {expandedAi === a.id && (
                           <tr key={`ai-${a.id}`}>
                             <td colSpan={7} className="px-5 pb-4 pt-0">
@@ -364,9 +358,7 @@ export default function NodalOfficerPage() {
                                     {topMatches.slice(0, 3).map(m => (
                                       <span key={m.role_id} className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium"
                                         style={{ background: 'rgba(26,86,219,0.08)', color: '#1A56DB' }}>
-                                        {m.role_name}
-                                        <span className="opacity-60">·</span>
-                                        <span className="font-mono">{m.score.toFixed(2)}</span>
+                                        {m.role_name} · <span className="font-mono">{m.score.toFixed(2)}</span>
                                       </span>
                                     ))}
                                   </div>
@@ -389,18 +381,20 @@ export default function NodalOfficerPage() {
       {showAssignModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: 'rgba(0,0,0,0.4)' }}
           onClick={() => setShowAssignModal(null)}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl" onClick={e => e.stopPropagation()}>
-            <h2 className="font-bold text-lg mb-1" style={{ color: '#1A2B4A' }}>{t('modal_assign_title')}</h2>
-            <p className="text-sm mb-5" style={{ color: '#888' }}>Assigning <strong>{showAssignModal.full_name}</strong> to a role.</p>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl overflow-y-auto max-h-[90vh]" onClick={e => e.stopPropagation()}>
+            <h2 className="font-bold text-lg mb-1" style={{ color: '#1A2B4A' }}>Assign Volunteer</h2>
+            <p className="text-sm mb-5" style={{ color: '#888' }}>
+              Assigning <strong>{showAssignModal.full_name}</strong> · AI top match: <span style={{ color: '#E65C00' }}>{parseTopMatches(showAssignModal.ai_top_matches)[0]?.role_name || 'none'}</span>
+            </p>
             <div className="mb-3">
-              <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Role</label>
+              <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Role <span style={{ color: '#DC2626' }}>*</span></label>
               <input className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                 style={{ border: '1px solid #E2E2DC', color: '#1A2B4A' }}
-                placeholder="Enter role name"
+                placeholder="Type the actual role e.g. Traffic assistant"
                 value={roleInput} onChange={e => setRoleInput(e.target.value)} />
             </div>
-            <div className="mb-5">
-              <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Department</label>
+            <div className="mb-3">
+              <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Department <span style={{ color: '#DC2626' }}>*</span></label>
               <select className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                 style={{ border: '1px solid #E2E2DC', color: deptInput ? '#1A2B4A' : '#aaa' }}
                 value={deptInput} onChange={e => setDeptInput(e.target.value)}>
@@ -408,11 +402,39 @@ export default function NodalOfficerPage() {
                 {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
+            <div className="mb-3">
+              <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Deployment Location <span className="text-xs font-normal" style={{ color: '#aaa' }}>(optional)</span></label>
+              <input className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ border: '1px solid #E2E2DC', color: '#1A2B4A' }}
+                placeholder="e.g. Beach Road, Puducherry"
+                value={locationInput} onChange={e => setLocationInput(e.target.value)} />
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-5">
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Date</label>
+                <input type="date" className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                  style={{ border: '1px solid #E2E2DC', color: '#1A2B4A' }}
+                  value={dateInput} onChange={e => setDateInput(e.target.value)} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Shift</label>
+                <select className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                  style={{ border: '1px solid #E2E2DC', color: shiftInput ? '#1A2B4A' : '#aaa' }}
+                  value={shiftInput} onChange={e => setShiftInput(e.target.value)}>
+                  <option value="">Select shift</option>
+                  <option value="06:00 AM - 10:00 AM">Morning (6–10 AM)</option>
+                  <option value="10:00 AM - 02:00 PM">Late Morning (10–2 PM)</option>
+                  <option value="02:00 PM - 06:00 PM">Afternoon (2–6 PM)</option>
+                  <option value="06:00 PM - 10:00 PM">Evening (6–10 PM)</option>
+                  <option value="Full Day 08:00 AM - 06:00 PM">Full Day (8 AM–6 PM)</option>
+                </select>
+              </div>
+            </div>
             <div className="flex gap-3">
               <button onClick={() => setShowAssignModal(null)} className="flex-1 py-3 rounded-xl text-sm font-medium"
-                style={{ border: '1px solid #E2E2DC', color: '#666' }}>{t('modal_cancel')}</button>
+                style={{ border: '1px solid #E2E2DC', color: '#666' }}>Cancel</button>
               <button onClick={handleAssign} className="flex-1 py-3 rounded-xl text-sm font-semibold text-white"
-                style={{ background: '#16A34A' }}>{t('modal_confirm_assign')}</button>
+                style={{ background: '#16A34A' }}>Confirm Assignment</button>
             </div>
           </div>
         </div>
@@ -423,19 +445,19 @@ export default function NodalOfficerPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: 'rgba(0,0,0,0.4)' }}
           onClick={() => setShowRejectModal(null)}>
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl" onClick={e => e.stopPropagation()}>
-            <h2 className="font-bold text-lg mb-1" style={{ color: '#1A2B4A' }}>{t('modal_reject_title')}</h2>
+            <h2 className="font-bold text-lg mb-1" style={{ color: '#1A2B4A' }}>Reject Application</h2>
             <p className="text-sm mb-5" style={{ color: '#888' }}>Are you sure you want to reject <strong>{showRejectModal.full_name}</strong>'s application?</p>
             <div className="flex gap-3">
               <button onClick={() => setShowRejectModal(null)} className="flex-1 py-3 rounded-xl text-sm font-medium"
-                style={{ border: '1px solid #E2E2DC', color: '#666' }}>{t('modal_cancel')}</button>
+                style={{ border: '1px solid #E2E2DC', color: '#666' }}>Cancel</button>
               <button onClick={handleReject} className="flex-1 py-3 rounded-xl text-sm font-semibold text-white"
-                style={{ background: '#DC2626' }}>{t('modal_confirm_reject')}</button>
+                style={{ background: '#DC2626' }}>Confirm Reject</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Feedback Modal (Phase 3) */}
+      {/* Feedback Modal */}
       {showFeedbackModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: 'rgba(0,0,0,0.4)' }}
           onClick={() => setShowFeedbackModal(null)}>
@@ -443,20 +465,16 @@ export default function NodalOfficerPage() {
             <h2 className="font-bold text-lg mb-1" style={{ color: '#1A2B4A' }}>Submit Feedback</h2>
             <p className="text-sm mb-5" style={{ color: '#888' }}>Rate <strong>{showFeedbackModal.full_name}</strong>'s performance.</p>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2" style={{ color: '#1A2B4A' }}>Performance Category</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#1A2B4A' }}>Performance</label>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { key: 'top_performer', label: '⭐ Top Performer', color: '#D97706', bg: '#FEF3C7' },
-                  { key: 'performer', label: '✅ Performer', color: '#16A34A', bg: '#F0FDF4' },
+                  { key: 'top_performer', label: '⭐ Top', color: '#D97706', bg: '#FEF3C7' },
+                  { key: 'performer', label: '✅ Good', color: '#16A34A', bg: '#F0FDF4' },
                   { key: 'regular', label: '👤 Regular', color: '#6B7280', bg: '#F3F4F6' },
                 ].map(opt => (
                   <button key={opt.key} onClick={() => setFeedbackCategory(opt.key)}
-                    className="py-2.5 px-3 rounded-xl text-xs font-semibold text-center transition-all"
-                    style={{
-                      background: feedbackCategory === opt.key ? opt.bg : '#F9F9F7',
-                      color: feedbackCategory === opt.key ? opt.color : '#aaa',
-                      border: `2px solid ${feedbackCategory === opt.key ? opt.color : 'transparent'}`
-                    }}>
+                    className="py-2.5 px-3 rounded-xl text-xs font-semibold text-center"
+                    style={{ background: feedbackCategory === opt.key ? opt.bg : '#F9F9F7', color: feedbackCategory === opt.key ? opt.color : '#aaa', border: `2px solid ${feedbackCategory === opt.key ? opt.color : 'transparent'}` }}>
                     {opt.label}
                   </button>
                 ))}
@@ -466,7 +484,7 @@ export default function NodalOfficerPage() {
               <label className="block text-sm font-medium mb-1.5" style={{ color: '#1A2B4A' }}>Notes (optional)</label>
               <textarea className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
                 style={{ border: '1px solid #E2E2DC', color: '#1A2B4A' }}
-                rows={3} placeholder="Add any specific observations..."
+                rows={3} placeholder="Add observations..."
                 value={feedbackNotes} onChange={e => setFeedbackNotes(e.target.value)} />
             </div>
             <div className="flex gap-3">
@@ -481,7 +499,7 @@ export default function NodalOfficerPage() {
 
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl text-sm font-medium text-white shadow-lg" style={{ background: '#1A2B4A' }}>
-          ✓ {toast}
+          {toast}
         </div>
       )}
     </>
